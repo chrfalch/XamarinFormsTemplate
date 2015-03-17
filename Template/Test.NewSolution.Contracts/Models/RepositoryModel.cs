@@ -1,17 +1,19 @@
 ﻿using System;
+using SQLite.Net.Attributes;
 
 namespace Test.NewSolution.Contracts.Models
 {
     /// <summary>
     /// I repository model.
     /// </summary>
-    public interface IRepositoryModel
+    public class RepositoryModel
     {
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
         /// <value>The identifier.</value>
-        string Id {get;set;}
+        [PrimaryKey]
+        public string Id {get; set;}
     }
 }
 

@@ -16,7 +16,7 @@ namespace Test.NewSolution.Data.Repositories
 	/// Implements the base Repository class for building SQLite database repositories 
 	/// </summary>
 	public class Repository<TModel>: IRepository<TModel>
-        where TModel  : class, IRepositoryModel, new()			
+        where TModel  : RepositoryModel, new()			
 	{
 		#region Private Members
 

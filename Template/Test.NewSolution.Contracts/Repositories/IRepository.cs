@@ -7,7 +7,7 @@ using Test.NewSolution.Contracts.Models;
 
 namespace Test.NewSolution.Repositories
 {
-    public interface IRepository<TModel> where TModel: class, IRepositoryModel, new()
+    public interface IRepository<TModel> where TModel: RepositoryModel, new()
 	{
 		/// <summary>
 		/// Initializes the provider.

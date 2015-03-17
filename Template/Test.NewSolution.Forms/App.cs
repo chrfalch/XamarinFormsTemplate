@@ -2,6 +2,12 @@
 
 using Xamarin.Forms;
 using Test.NewSolution.Forms.IoC;
+using Test.NewSolution.Contracts.Services;
+using Test.NewSolution.Data.Services;
+using Test.NewSolution.Contracts.Models;
+using Test.NewSolution.Data.Repositories;
+using Test.NewSolution.Repositories;
+using System.Threading.Tasks;
 
 namespace Test.NewSolution.Forms
 {
@@ -10,6 +16,15 @@ namespace Test.NewSolution.Forms
     /// </summary>
 	public class App : Application
 	{                
+        #region Private Members
+
+        /// <summary>
+        /// The initialized.
+        /// </summary>
+        private bool _initialized = false;
+
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Test.NewSolution.App"/> class.
         /// </summary>
@@ -19,13 +34,29 @@ namespace Test.NewSolution.Forms
             // Save container
             Container = containerProvider;
 
-            // Set up container
+            // Only fill container if it has not been filled yet
+            if (!_initialized)
+            {
+                _initialized = true;
 
-            // Let the caller setup its container
-            if (setupContainerCallback != null)
-                setupContainerCallback(Container);
+                // Set up container
+                SetupContainer();
 
-			// The root page of your application
+                // Let the caller setup its container
+                if (setupContainerCallback != null)
+                    setupContainerCallback(Container);
+            }
+
+            // Initialize 
+            Task.Run(async() => {
+
+                // Initialize services
+                await Container.Resolve<IPreferenceService>().InitializeAsync().ContinueWith(t => 
+                    Container.Resolve<ILoggingService>().InitializeAsync());
+
+            });
+
+            // The root page of your application
 			MainPage = new ContentPage {
 				Content = new StackLayout {
 					VerticalOptions = LayoutOptions.Center,
@@ -77,6 +108,23 @@ namespace Test.NewSolution.Forms
 		{
 			// Handle when your app resumes
 		}
+
+        #endregion
+
+        #region Private Members
+
+        /// <summary>
+        /// Setups the container.
+        /// </summary>
+        private void SetupContainer()
+        {
+            // Services
+            Container.RegisterSingleton<IPreferenceService, PreferenceService>();
+            Container.RegisterSingleton<ILoggingService, LoggingService>();
+
+            // Repositories
+            Container.RegisterSingleton<IRepository<PreferenceModel>, Repository<PreferenceModel>>();
+        }
 
         #endregion
 	}
