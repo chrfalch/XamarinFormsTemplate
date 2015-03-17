@@ -8,13 +8,14 @@ using System.Linq.Expressions;
 using System.Threading;
 using Test.NewSolution.Repositories;
 using Test.NewSolution.Contracts.Models;
+using Test.NewSolution.Contracts.Repositories;
 
 namespace Test.NewSolution.Data.Repositories
 {
 	/// <summary>
 	/// Implements the base Repository class for building SQLite database repositories 
 	/// </summary>
-	public abstract class Repository<TModel>: IRepository<TModel>
+	public class Repository<TModel>: IRepository<TModel>
         where TModel  : class, IRepositoryModel, new()			
 	{
 		#region Private Members
@@ -29,7 +30,21 @@ namespace Test.NewSolution.Data.Repositories
         /// </summary>
         private bool _initializedFlag = false;
 
+        /// <summary>
+        /// The repository provider.
+        /// </summary>
+        private readonly IRepositoryProvider _repositoryProvider;
+
 		#endregion
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Test.NewSolution.Data.Repositories.Repository`1"/> class.
+        /// </summary>
+        /// <param name="repositoryProvider">Repository provider.</param>
+        public Repository(IRepositoryProvider repositoryProvider)
+        {
+            _repositoryProvider = repositoryProvider;
+        }
 
 		#region IRepository implementation
 
@@ -37,14 +52,10 @@ namespace Test.NewSolution.Data.Repositories
 		/// Initializes the provider.
 		/// </summary>
 		/// <returns>The async.</returns>
-		public abstract Task InitializeAsync ();
-
-		/// <summary>
-		/// Initializes the provider.
-		/// </summary>
-		/// <returns>The async.</returns>
-		public Task InitializeAsync(SQLiteConnectionWithLock connection)
+		public Task InitializeAsync()
 		{
+            var connection = _repositoryProvider.GetSQLConnection();
+
             _initializedFlag = true;
 			_connection = new SQLiteAsyncConnection (() => connection);
 			return _connection.CreateTableAsync<TModel> ();

@@ -150,9 +150,9 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Repositories\RepositoryiOSPlatform.cs" />
     <Compile Include="TinyIoC.cs" />
-    <Compile Include="Providers\TypeResolverProvider.cs" />
+    <Compile Include="Native\IoC\ContainerProvider.cs" />
+    <Compile Include="Native\Repositories\RepositoryProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="ITunesArtwork.png" />
@@ -163,6 +163,6 @@
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <ItemGroup>
     <Folder Include="Providers\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Native\" />
   </ItemGroup>
 </Project>

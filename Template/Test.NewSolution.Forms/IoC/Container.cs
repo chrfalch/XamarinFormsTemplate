@@ -17,7 +17,7 @@ namespace Test.NewSolution.Forms.IoC
     /// <summary>
     /// Container helper.
     /// </summary>
-    public static class ContainerHelper
+    public static class Container
     {
         /// <summary>
         /// Resolves the given type into an instance

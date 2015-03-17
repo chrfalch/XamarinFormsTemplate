@@ -4,8 +4,10 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
-using Test.NewSolution.iOS.Providers;
+using Test.NewSolution.iOS.Native.IoC;
 using Test.NewSolution.Forms;
+using Test.NewSolution.Contracts.Repositories;
+using Test.NewSolution.iOS.Native.Repositories;
 
 namespace Test.NewSolution.iOS
 {
@@ -16,7 +18,12 @@ namespace Test.NewSolution.iOS
 		{
 			global::Xamarin.Forms.Forms.Init ();
 
-            LoadApplication (new App (new TypeResolverProvider()));
+            LoadApplication (new App (new ContainerProvider(), (container) => {
+
+                // Register providers
+                container.Register<IRepositoryProvider, RepositoryProvider>();
+
+            }));
 
 			return base.FinishedLaunching (app, options);
 		}

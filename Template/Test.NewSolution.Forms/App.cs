@@ -1,7 +1,7 @@
 ﻿using System;
 
 using Xamarin.Forms;
-using Test.NewSolution.Forms.Contracts;
+using Test.NewSolution.Forms.IoC;
 
 namespace Test.NewSolution.Forms
 {
@@ -14,9 +14,16 @@ namespace Test.NewSolution.Forms
         /// Initializes a new instance of the <see cref="Test.NewSolution.App"/> class.
         /// </summary>
         /// <param name="typeResolveProvider">Type resolve provider.</param>
-		public App (ITypeResolveProvider typeResolveProvider)
+        public App (IContainerProvider containerProvider, Action<IContainerProvider> setupContainerCallback)
 		{
-            Container = typeResolveProvider;
+            // Save container
+            Container = containerProvider;
+
+            // Set up container
+
+            // Let the caller setup its container
+            if (setupContainerCallback != null)
+                setupContainerCallback(Container);
 
 			// The root page of your application
 			MainPage = new ContentPage {
@@ -38,7 +45,7 @@ namespace Test.NewSolution.Forms
         /// Gets the container.
         /// </summary>
         /// <value>The container.</value>
-        public ITypeResolveProvider Container { get; private set;}
+        public IContainerProvider Container { get; private set;}
 
         #endregion
 

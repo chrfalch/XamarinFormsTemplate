@@ -10,12 +10,12 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 using System;
 
-namespace Test.NewSolution.Forms.Contracts
+namespace Test.NewSolution.Forms.IoC
 {
 	/// <summary>
 	/// Defines the container interface
 	/// </summary>
-	public interface ITypeResolveProvider
+	public interface IContainerProvider
 	{
 		/// <summary>
 		/// Resolves the given type into an instance

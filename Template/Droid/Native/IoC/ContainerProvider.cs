@@ -1,19 +1,18 @@
-using System;
+﻿using System;
 using TinyIoC;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Test.NewSolution.Contracts;
-using Test.NewSolution.Forms.Contracts;
+using Test.NewSolution.Forms.IoC;
 
-namespace Test.NewSolution.iOS.Providers
+namespace Test.NewSolution.Droid.Native.IoC
 {
-    public class TypeResolverProvider: ITypeResolveProvider
+	public class ContainerProvider: IContainerProvider
 	{
-		public TypeResolverProvider ()
+		public ContainerProvider ()
 		{
 		}
 
-		#region ITypeResolveProvider implementation
+        #region IContainerProvider implementation
 
 		public TTypeToResolve Resolve<TTypeToResolve> () where TTypeToResolve : class
 		{
@@ -44,21 +43,18 @@ namespace Test.NewSolution.iOS.Providers
 
 		}
 
-		public void Register<RegisterType, RegisterImplementation> () 
-            where RegisterType : class 
-            where RegisterImplementation : class, RegisterType
-		{
+        public void Register<RegisterType, RegisterImplementation> () where RegisterType : class where RegisterImplementation : class, RegisterType
+        {
             TinyIoCContainer.Current.Register<RegisterType, RegisterImplementation> ().AsMultiInstance();
-		}
+        }
 
-		public void Register (Type registerType, Type registerImplementation)
-		{
+        public void Register (Type registerType, Type registerImplementation)
+        {
             TinyIoCContainer.Current.Register (registerType, registerImplementation).AsMultiInstance();
-		}
+        }
 
 		public void RegisterSingleton<RegisterType, RegisterImplementation> () 
-            where RegisterType : class 
-            where RegisterImplementation : class, RegisterType
+            where RegisterType : class where RegisterImplementation : class, RegisterType
 		{
 			TinyIoCContainer.Current.Register<RegisterType, RegisterImplementation> ().AsSingleton ();
 		}
@@ -68,7 +64,7 @@ namespace Test.NewSolution.iOS.Providers
 			TinyIoCContainer.Current.Register (RegisterType, RegisterImplementation).AsSingleton ();
 		}
 
-        public void Register<RegisterType, RegisterImplementation>(RegisterImplementation registerImplementation) 
+        public void Register<RegisterType, RegisterImplementation> (RegisterImplementation registerImplementation)
             where RegisterType : class 
             where RegisterImplementation : class, RegisterType
         {

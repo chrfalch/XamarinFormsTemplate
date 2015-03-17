@@ -7,8 +7,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using Test.NewSolution.Droid.Providers;
 using Test.NewSolution.Forms;
+using Test.NewSolution.Droid.Native.IoC;
+using Test.NewSolution.Contracts.Repositories;
+using Test.NewSolution.Droid.Native.Repositories;
 
 namespace Test.NewSolution.Droid
 {
@@ -22,7 +24,12 @@ namespace Test.NewSolution.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 
-            LoadApplication (new App (new TypeResolverProvider()));
+            LoadApplication (new App (new ContainerProvider(), (container) => {
+
+                // Register providers
+                container.Register<IRepositoryProvider, RepositoryProvider>();
+
+            }));
 		}
 	}
 }
