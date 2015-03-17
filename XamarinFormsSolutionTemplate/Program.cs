@@ -120,7 +120,7 @@ namespace XamarinFormsSolutionTemplate
 		static bool ShouldSkipFile (string file)
 		{
 			var filename = Path.GetFileName (file).ToLowerInvariant();
-			if (filename == ".ds_store")
+			if (filename == ".ds_store" || Path.GetExtension(filename).ToLowerInvariant() == ".userprefs")
 				return true;
 
 			return false;
