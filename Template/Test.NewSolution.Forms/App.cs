@@ -8,6 +8,10 @@ using Test.NewSolution.Contracts.Models;
 using Test.NewSolution.Data.Repositories;
 using Test.NewSolution.Repositories;
 using System.Threading.Tasks;
+using Test.NewSolution.Forms.Views;
+using Test.NewSolution.Forms.Providers;
+using Test.NewSolution.Forms.ViewModels;
+using Test.NewSolution.Forms.Mvvm;
 
 namespace Test.NewSolution.Forms
 {
@@ -45,6 +49,9 @@ namespace Test.NewSolution.Forms
                 // Let the caller setup its container
                 if (setupContainerCallback != null)
                     setupContainerCallback(Container);
+
+                // Register views
+                RegisterViews();
             }
 
             // Initialize 
@@ -57,17 +64,7 @@ namespace Test.NewSolution.Forms
             });
 
             // The root page of your application
-			MainPage = new ContentPage {
-				Content = new StackLayout {
-					VerticalOptions = LayoutOptions.Center,
-					Children = {
-						new Label {
-							XAlign = TextAlignment.Center,
-							Text = "Welcome to Xamarin Forms!"
-						}
-					}
-				}
-			};
+            MainPage = Container.Resolve<MasterView>();
 		}
 
         #region App Properties
@@ -127,6 +124,15 @@ namespace Test.NewSolution.Forms
             Container.RegisterSingleton<IRepository<PreferenceModel>, Repository<PreferenceModel>>();
         }
 
+        /// <summary>
+        /// Registers the views.
+        /// </summary>
+        private void RegisterViews()
+        {
+            ViewManager.RegisterView<MasterViewModel, MasterView>();
+            ViewManager.RegisterView<MenuViewModel, MenuView>();
+            ViewManager.RegisterView<MainViewModel, MainView>();
+        }
         #endregion
 	}
 }

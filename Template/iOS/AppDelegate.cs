@@ -4,10 +4,12 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
-using Test.NewSolution.iOS.Native.IoC;
+using Test.NewSolution.iOS.Platform.IoC;
 using Test.NewSolution.Forms;
 using Test.NewSolution.Contracts.Repositories;
-using Test.NewSolution.iOS.Native.Repositories;
+using Test.NewSolution.iOS.Platform.Repositories;
+using Test.NewSolution.Forms.Mvvm;
+using Test.NewSolution.iOS.Platform.Mvvm;
 
 namespace Test.NewSolution.iOS
 {
@@ -22,6 +24,7 @@ namespace Test.NewSolution.iOS
 
                 // Register providers
                 container.Register<IRepositoryProvider, RepositoryProvider>();
+                container.Register<IImageProvider, ImageProvider>();
 
             }));
 

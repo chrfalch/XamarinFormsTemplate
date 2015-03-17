@@ -8,9 +8,9 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Test.NewSolution.Forms;
-using Test.NewSolution.Droid.Native.IoC;
+using Test.NewSolution.Droid.Platform.IoC;
 using Test.NewSolution.Contracts.Repositories;
-using Test.NewSolution.Droid.Native.Repositories;
+using Test.NewSolution.Droid.Platform.Repositories;
 
 namespace Test.NewSolution.Droid
 {

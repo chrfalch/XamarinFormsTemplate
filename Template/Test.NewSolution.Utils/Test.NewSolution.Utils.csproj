@@ -32,11 +32,15 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\PropertyNameHelper.cs" />
+    <Compile Include="Classes\BaseNotifyPropertyChangedObject.cs" />
+    <Compile Include="Classes\ObservableCollectionWithAddRange.cs" />
+    <Compile Include="Classes\PropertyChangeListener.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <ItemGroup>
     <Folder Include="Reflection\" />
+    <Folder Include="Classes\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

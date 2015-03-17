@@ -60,4 +60,14 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
 
+  <data name="TitleMenu" xml:space="preserve">
+    <value>Menu</value>
+    <comment>Menu page Title</comment>
+  </data>
+
+   <data name="AppName" xml:space="preserve">
+    <value>Test.NewSolution</value>
+    <comment>App Name</comment>
+  </data>
+
 </root>    

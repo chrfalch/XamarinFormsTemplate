@@ -34,6 +34,22 @@
     <Compile Include="IoC\Container.cs" />
     <Compile Include="IoC\IContainerProvider.cs" />
     <Compile Include="App.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="Providers\ViewModelStorageProvider.cs" />
+    <Compile Include="Views\BaseContentsView.cs" />
+    <Compile Include="Views\ViewDecorator.cs" />
+    <Compile Include="Controls\RoundedBorderControl.cs" />
+    <Compile Include="Mvvm\ViewManager.cs" />
+    <Compile Include="Mvvm\NavigationManager.cs" />
+    <Compile Include="Mvvm\IView.cs" />
+    <Compile Include="Mvvm\IViewWithParameter.cs" />
+    <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="Views\MenuView.cs" />
+    <Compile Include="ViewModels\MasterViewModel.cs" />
+    <Compile Include="Views\MasterView.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\MainView.cs" />
+    <Compile Include="Mvvm\IImageProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.4.0.6341\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.4.0.6341\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -62,11 +78,17 @@
       <Project>{79968FF8-9E85-42D1-9917-73B52F022969}</Project>
       <Name>Test.NewSolution.Localization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Test.NewSolution.Utils\Test.NewSolution.Utils.csproj">
+      <Project>{C5A54152-DCDF-4ED8-B9F7-7A701EDD73CB}</Project>
+      <Name>Test.NewSolution.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
     <Folder Include="Views\" />
-    <Folder Include="Contracts\" />
     <Folder Include="IoC\" />
+    <Folder Include="Providers\" />
+    <Folder Include="Controls\" />
+    <Folder Include="Mvvm\" />
   </ItemGroup>
 </Project>
