@@ -12,7 +12,7 @@ namespace Test.NewSolution.Data.Tests.Mocks
 
         #region ILoggingService implementation
 
-        public Task InitializAsync()
+        public Task InitializeAsync()
         {
             return Task.FromResult(true);
         }

@@ -97,7 +97,8 @@ namespace Test.NewSolution.Forms
         /// <remarks>To be added.</remarks>
 		protected override void OnSleep ()
 		{
-			// Handle when your app sleeps
+			// Persist preferences
+            Task.Run(async () => await Container.Resolve<IPreferenceService>().PersistAsync()).Wait();
 		}
 
         /// <summary>
