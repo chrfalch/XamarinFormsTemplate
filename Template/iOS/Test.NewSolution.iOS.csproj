@@ -109,10 +109,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Test.NewSolution\Test.NewSolution.csproj">
-      <Project>{39EA0550-B11F-4ABC-B23A-61EB4136C775}</Project>
-      <Name>Test.NewSolution</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Test.NewSolution.Data\Test.NewSolution.Data.csproj">
       <Project>{DA2367DC-20DB-4123-B187-B66A1E9A8E36}</Project>
       <Name>Test.NewSolution.Data</Name>
@@ -120,6 +116,10 @@
     <ProjectReference Include="..\Test.NewSolution.Contracts\Test.NewSolution.Contracts.csproj">
       <Project>{AE6A6C63-9649-4E08-B35D-3F2B8CE9D620}</Project>
       <Name>Test.NewSolution.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Test.NewSolution.Forms\Test.NewSolution.Forms.csproj">
+      <Project>{39EA0550-B11F-4ABC-B23A-61EB4136C775}</Project>
+      <Name>Test.NewSolution.Forms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +151,8 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Repositories\RepositoryiOSPlatform.cs" />
+    <Compile Include="TinyIoC.cs" />
+    <Compile Include="Providers\TypeResolverProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="ITunesArtwork.png" />

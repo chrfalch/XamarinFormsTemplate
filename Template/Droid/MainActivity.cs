@@ -7,6 +7,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Test.NewSolution.Droid.Providers;
+using Test.NewSolution.Forms;
 
 namespace Test.NewSolution.Droid
 {
@@ -20,7 +22,7 @@ namespace Test.NewSolution.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
 
-			LoadApplication (new App ());
+            LoadApplication (new App (new TypeResolverProvider()));
 		}
 	}
 }

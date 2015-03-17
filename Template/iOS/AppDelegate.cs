@@ -4,6 +4,8 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using Test.NewSolution.iOS.Providers;
+using Test.NewSolution.Forms;
 
 namespace Test.NewSolution.iOS
 {
@@ -14,7 +16,7 @@ namespace Test.NewSolution.iOS
 		{
 			global::Xamarin.Forms.Forms.Init ();
 
-			LoadApplication (new App ());
+            LoadApplication (new App (new TypeResolverProvider()));
 
 			return base.FinishedLaunching (app, options);
 		}
