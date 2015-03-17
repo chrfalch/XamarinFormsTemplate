@@ -60,7 +60,7 @@ namespace Test.NewSolution.Forms.Views
         /// <summary>
         /// Raises the appearing event.
         /// </summary>
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
@@ -69,7 +69,7 @@ namespace Test.NewSolution.Forms.Views
 
             _onAppearinCalled = true;
 
-            ViewModel.OnAppearingAsync();
+            await ViewModel.OnAppearingAsync();
         }
 
         #endregion

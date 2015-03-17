@@ -14,7 +14,9 @@ namespace Test.NewSolution.Forms.Views
         /// </summary>
         public MenuView()
         {
-            Icon = ImageProvider.GetImageSource("MenuButton");
+            Device.OnPlatform(
+                () => Icon = ImageProvider.GetImageSource("MenuButton"),
+                () => Icon = "small15x1.png");            
         }
 
         /// <summary>

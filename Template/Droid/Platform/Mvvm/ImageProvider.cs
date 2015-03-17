@@ -17,7 +17,7 @@ namespace Test.NewSolution.Droid.Platform.Mvvm
         /// <returns>The image.</returns>
         /// <param name="imageName">Image name.</param>
         public FileImageSource GetImageSource(string imageName)
-        {
+        {                           
             return imageName;
         }
 
