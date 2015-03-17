@@ -102,6 +102,7 @@
     <Compile Include="Platform\Repositories\RepositoryProvider.cs" />
     <Compile Include="Platform\Renderers\RoundedBorderControlRenderer.cs" />
     <Compile Include="Platform\Views\RoundedBorderView.cs" />
+    <Compile Include="Platform\Mvvm\ImageProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -113,6 +114,7 @@
     <Folder Include="Resources\layout\" />
     <Folder Include="Resources\values\" />
     <Folder Include="Platform\" />
+    <Folder Include="Platform\Mvvm\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />

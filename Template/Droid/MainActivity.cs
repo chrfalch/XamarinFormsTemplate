@@ -11,6 +11,8 @@ using Test.NewSolution.Forms;
 using Test.NewSolution.Droid.Platform.IoC;
 using Test.NewSolution.Contracts.Repositories;
 using Test.NewSolution.Droid.Platform.Repositories;
+using Test.NewSolution.Droid.Platform.Mvvm;
+using Test.NewSolution.Forms.Mvvm;
 
 namespace Test.NewSolution.Droid
 {
@@ -28,7 +30,7 @@ namespace Test.NewSolution.Droid
 
                 // Register providers
                 container.Register<IRepositoryProvider, RepositoryProvider>();
-
+                container.Register<IImageProvider, ImageProvider>();
             }));
 		}
 	}
