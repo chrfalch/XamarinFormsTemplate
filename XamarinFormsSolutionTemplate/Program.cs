@@ -106,7 +106,7 @@ namespace XamarinFormsSolutionTemplate
 		static bool ShouldCopyRaw (string file)
 		{
 			var ext = Path.GetExtension (file).ToLowerInvariant ();
-			if (ext == ".png")
+			if (ext == ".png" || ext == ".ttf")
 				return true;
 
 			return false;
