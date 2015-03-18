@@ -2,7 +2,7 @@
 using Xamarin.Forms.Platform.iOS;
 using UIKit;
 using Xamarin.Forms;
-using Test.NewSolution.Forms.Controls;
+using Test.NewSolution.FormsApp.Controls;
 using Test.NewSolution.iOS.Platform.Renderers;
 
 [assembly: ExportRenderer (typeof (RoundedBorderControl), typeof (RoundedBorderControlRenderer))]

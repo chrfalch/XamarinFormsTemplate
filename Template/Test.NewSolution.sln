@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.Forms", "Test.NewSolution.Forms\Test.NewSolution.Forms.csproj", "{39EA0550-B11F-4ABC-B23A-61EB4136C775}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.FormsApp", "Test.NewSolution.FormsApp\Test.NewSolution.FormsApp.csproj", "{39EA0550-B11F-4ABC-B23A-61EB4136C775}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.iOS", "iOS\Test.NewSolution.iOS.csproj", "{43A5D241-4140-41A9-9E4B-713E5467A9F9}"
 EndProject

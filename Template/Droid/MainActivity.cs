@@ -7,12 +7,12 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using Test.NewSolution.Forms;
+using Test.NewSolution.FormsApp;
 using Test.NewSolution.Droid.Platform.IoC;
 using Test.NewSolution.Contracts.Repositories;
 using Test.NewSolution.Droid.Platform.Repositories;
 using Test.NewSolution.Droid.Platform.Mvvm;
-using Test.NewSolution.Forms.Mvvm;
+using Test.NewSolution.FormsApp.Mvvm;
 
 namespace Test.NewSolution.Droid
 {

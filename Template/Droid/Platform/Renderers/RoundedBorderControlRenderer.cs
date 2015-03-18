@@ -2,7 +2,7 @@
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms;
 using Android.Graphics;
-using Test.NewSolution.Forms.Controls;
+using Test.NewSolution.FormsApp.Controls;
 using Test.NewSolution.Droid.Platform.Renderers;
 using Test.NewSolution.Droid.Platform.Controls;
 

@@ -5,10 +5,10 @@ using System.Linq;
 using Foundation;
 using UIKit;
 using Test.NewSolution.iOS.Platform.IoC;
-using Test.NewSolution.Forms;
+using Test.NewSolution.FormsApp;
 using Test.NewSolution.Contracts.Repositories;
 using Test.NewSolution.iOS.Platform.Repositories;
-using Test.NewSolution.Forms.Mvvm;
+using Test.NewSolution.FormsApp.Mvvm;
 using Test.NewSolution.iOS.Platform.Mvvm;
 
 namespace Test.NewSolution.iOS

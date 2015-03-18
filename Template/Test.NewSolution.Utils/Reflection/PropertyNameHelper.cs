@@ -1,5 +1,5 @@
 ﻿/****************************** Module Header ******************************\
-Module Name:  PropertyNameHelper.cs
+Module NamTest.NewSolution.FormsAppcs
 Copyright (c) Christian Falch
 All rights reserved.
 

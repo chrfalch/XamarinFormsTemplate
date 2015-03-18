@@ -1,5 +1,5 @@
 ﻿using System;
-using Test.NewSolution.Forms.Mvvm;
+using Test.NewSolution.FormsApp.Mvvm;
 using Xamarin.Forms;
 
 namespace Test.NewSolution.iOS.Platform.Mvvm

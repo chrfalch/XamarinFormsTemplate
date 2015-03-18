@@ -2,7 +2,7 @@ using System;
 using TinyIoC;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Test.NewSolution.Forms.IoC;
+using Test.NewSolution.FormsApp.IoC;
 
 namespace Test.NewSolution.iOS.Platform.IoC
 {

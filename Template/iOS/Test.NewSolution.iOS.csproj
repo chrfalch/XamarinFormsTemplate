@@ -120,10 +120,6 @@
       <Project>{AE6A6C63-9649-4E08-B35D-3F2B8CE9D620}</Project>
       <Name>Test.NewSolution.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Test.NewSolution.Forms\Test.NewSolution.Forms.csproj">
-      <Project>{39EA0550-B11F-4ABC-B23A-61EB4136C775}</Project>
-      <Name>Test.NewSolution.Forms</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Test.NewSolution.Localization\Test.NewSolution.Localization.csproj">
       <Project>{79968FF8-9E85-42D1-9917-73B52F022969}</Project>
       <Name>Test.NewSolution.Localization</Name>
@@ -132,6 +128,10 @@
       <Project>{C5A54152-DCDF-4ED8-B9F7-7A701EDD73CB}</Project>
       <Name>Test.NewSolution.Utils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Test.NewSolution.FormsApp\Test.NewSolution.FormsApp.csproj">
+      <Project>{39EA0550-B11F-4ABC-B23A-61EB4136C775}</Project>
+      <Name>Test.NewSolution.FormsApp</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Icon-60%403x.png" />
@@ -139,6 +139,7 @@
     <BundleResource Include="Resources\Icon-Small-40%403x.png" />
     <BundleResource Include="Resources\MenuButton.png" />
     <BundleResource Include="Resources\MenuButton%402x.png" />
+    <BundleResource Include="Resources\Fonts\fontawesome-webfont.ttf" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -170,6 +171,7 @@
     <Folder Include="Platform\Views\" />
     <Folder Include="Platform\Renderers\" />
     <Folder Include="Platform\Mvvm\" />
+    <Folder Include="Resources\Fonts\" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
