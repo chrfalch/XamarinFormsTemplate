@@ -8,7 +8,7 @@ namespace XamarinFormsSolutionTemplate
 		static readonly string TemplateName = "Test.NewSolution";
 		static readonly string TemplatePath = "/Users/christianfalch/Dropbox/Projects/Islandssoftware/Dev/xamarin/XamarinFormsSolutionTemplate/Template";
 
-		static string NewName = "NControlDemo.Forms.Xamarin.Plugins";
+		static string NewName = "NControlDemo.Tester";
 		static string OutputPath = "/Users/christianfalch/Dropbox/Projects/Islandssoftware/Dev/xamarin/XamarinFormsSolutionTemplate/Results";
 
 		public static void Main (string[] args)
@@ -120,7 +120,9 @@ namespace XamarinFormsSolutionTemplate
 		static bool ShouldSkipFile (string file)
 		{
 			var filename = Path.GetFileName (file).ToLowerInvariant();
-			if (filename == ".ds_store" || Path.GetExtension(filename).ToLowerInvariant() == ".userprefs")
+			if (filename == ".ds_store" || 
+				Path.GetExtension(filename).ToLowerInvariant() == ".userprefs" ||
+				filename == "package.config")
 				return true;
 
 			return false;
