@@ -2,4 +2,8 @@
 <resources>
     <style name="Theme.NewSolution" parent="@android:style/Theme.Holo.Light">
     </style>
+    <style name="Theme.Splash" parent="android:Theme">
+    <item name="android:windowBackground">@drawable/splash</item>
+    <item name="android:windowNoTitle">true</item>
+  </style>
 </resources>

@@ -11,6 +11,14 @@ namespace Test.NewSolution.FormsApp.Views
     public class MainView: BaseContentsView<MainViewModel>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Test.NewSolution.FormsApp.Views.MainView"/> class.
+        /// </summary>
+        public MainView()
+        {
+            DefaultBackButtonBehaviour = true;
+        }
+
+        /// <summary>
         /// Implement to create the layout on the page
         /// </summary>
         /// <returns>The layout.</returns>

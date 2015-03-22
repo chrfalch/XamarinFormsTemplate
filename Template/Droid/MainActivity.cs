@@ -17,7 +17,7 @@ using Test.NewSolution.FormsApp.Mvvm;
 namespace Test.NewSolution.Droid
 {
 	[Activity (Label = "Test.NewSolution.Droid", Icon = "@drawable/icon", 
-        MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
 	{
 		protected override void OnCreate (Bundle bundle)

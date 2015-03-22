@@ -117,6 +117,9 @@ namespace Test.NewSolution.FormsApp.Views
         /// <remarks>To be added.</remarks>
         protected override bool OnBackButtonPressed()
         {
+            if (DefaultBackButtonBehaviour)
+                return base.OnBackButtonPressed();
+            
             if (ViewModel.BackButtonCommand != null &&
                ViewModel.BackButtonCommand.CanExecute(null))
                 ViewModel.BackButtonCommand.Execute(null);
@@ -127,6 +130,13 @@ namespace Test.NewSolution.FormsApp.Views
 		#endregion
 
 		#region Protected Members
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this
+        /// <see cref="Test.NewSolution.FormsApp.Views.BaseContentsView`1"/> default back button behaviour.
+        /// </summary>
+        /// <value><c>true</c> if default back button behaviour; otherwise, <c>false</c>.</value>
+        protected bool DefaultBackButtonBehaviour { get; set; }
 
         /// <summary>
         /// Gets the image provide.
