@@ -7,7 +7,7 @@
     <ProjectGuid>{79968FF8-9E85-42D1-9917-73B52F022969}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Test.NewSolution.Localization</RootNamespace>
-    <AssemblyName>Clooger.Localization</AssemblyName>
+    <AssemblyName>Test.NewSolution.Localization</AssemblyName>
     <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
