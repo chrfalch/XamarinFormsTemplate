@@ -70,6 +70,18 @@
     <Reference Include="SQLite.Net.Platform.XamarinAndroid">
       <HintPath>..\packages\SQLite.Net.Platform.XamarinAndroid.2.5.1\lib\MonoAndroid\SQLite.Net.Platform.XamarinAndroid.dll</HintPath>
     </Reference>
+    <Reference Include="NGraphics">
+      <HintPath>..\packages\NGraphics.0.1.10\lib\MonoAndroid10\NGraphics.dll</HintPath>
+    </Reference>
+    <Reference Include="NGraphics.Android">
+      <HintPath>..\packages\NGraphics.0.1.10\lib\MonoAndroid10\NGraphics.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="NControl.Droid">
+      <HintPath>..\packages\NControl.0.1.1\lib\MonoAndroid10\NControl.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="NControl.Abstractions">
+      <HintPath>..\packages\NControl.0.1.1\lib\MonoAndroid10\NControl.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Test.NewSolution.Data\Test.NewSolution.Data.csproj">
@@ -100,7 +112,6 @@
     <Compile Include="TinyIoC.cs" />
     <Compile Include="Platform\IoC\ContainerProvider.cs" />
     <Compile Include="Platform\Repositories\RepositoryProvider.cs" />
-    <Compile Include="Platform\Renderers\RoundedBorderControlRenderer.cs" />
     <Compile Include="Platform\Views\RoundedBorderView.cs" />
     <Compile Include="Platform\Mvvm\ImageProvider.cs" />
     <Compile Include="Platform\Renderers\FontAwesomeLabelRenderer.cs" />

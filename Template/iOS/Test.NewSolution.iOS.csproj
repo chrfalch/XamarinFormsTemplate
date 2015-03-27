@@ -110,6 +110,18 @@
     <Reference Include="SQLite.Net.Platform.XamarinIOS.Unified">
       <HintPath>..\packages\SQLite.Net.Platform.XamarinIOS.2.5.1\lib\Xamarin.iOS10\SQLite.Net.Platform.XamarinIOS.Unified.dll</HintPath>
     </Reference>
+    <Reference Include="NGraphics">
+      <HintPath>..\packages\NGraphics.0.1.10\lib\Xamarin.iOS10\NGraphics.dll</HintPath>
+    </Reference>
+    <Reference Include="NGraphics.iOS">
+      <HintPath>..\packages\NGraphics.0.1.10\lib\Xamarin.iOS10\NGraphics.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="NControl.iOS">
+      <HintPath>..\packages\NControl.0.1.1\lib\Xamarin.iOS10\NControl.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="NControl.Abstractions">
+      <HintPath>..\packages\NControl.0.1.1\lib\Xamarin.iOS10\NControl.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Test.NewSolution.Data\Test.NewSolution.Data.csproj">
@@ -152,7 +164,6 @@
     <Compile Include="TinyIoC.cs" />
     <Compile Include="Platform\IoC\ContainerProvider.cs" />
     <Compile Include="Platform\Repositories\RepositoryProvider.cs" />
-    <Compile Include="Platform\Renderers\RoundedBorderControlRenderer.cs" />
     <Compile Include="Platform\Mvvm\ImageProvider.cs" />
   </ItemGroup>
   <ItemGroup>
