@@ -117,10 +117,10 @@
       <HintPath>..\packages\NGraphics.0.1.10\lib\Xamarin.iOS10\NGraphics.iOS.dll</HintPath>
     </Reference>
     <Reference Include="NControl.iOS">
-      <HintPath>..\packages\NControl.0.1.1\lib\Xamarin.iOS10\NControl.iOS.dll</HintPath>
+      <HintPath>..\packages\NControl.0.2.0\lib\Xamarin.iOS10\NControl.iOS.dll</HintPath>
     </Reference>
     <Reference Include="NControl.Abstractions">
-      <HintPath>..\packages\NControl.0.1.1\lib\Xamarin.iOS10\NControl.Abstractions.dll</HintPath>
+      <HintPath>..\packages\NControl.0.2.0\lib\Xamarin.iOS10\NControl.Abstractions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
