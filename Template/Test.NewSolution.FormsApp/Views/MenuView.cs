@@ -16,7 +16,7 @@ namespace Test.NewSolution.FormsApp.Views
         {
             Device.OnPlatform(
                 () => Icon = ImageProvider.GetImageSource("MenuButton"),
-                () => Icon = "small15x1.png");            
+                () => Icon = null);            
         }
 
         /// <summary>

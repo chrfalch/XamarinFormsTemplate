@@ -16,7 +16,7 @@ using Test.NewSolution.FormsApp.Mvvm;
 
 namespace Test.NewSolution.Droid
 {
-	[Activity (Label = "Test.NewSolution.Droid", Icon = "@drawable/icon", 
+	[Activity (Label = "Test.NewSolution", Icon = "@drawable/icon", 
     ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
 	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
 	{

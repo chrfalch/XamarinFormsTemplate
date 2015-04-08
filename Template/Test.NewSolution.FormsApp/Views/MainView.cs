@@ -24,11 +24,12 @@ namespace Test.NewSolution.FormsApp.Views
         /// <returns>The layout.</returns>
         protected override View CreateContents()
         {
-            return new StackLayout{
-                Children = {
-                    new FontAwesomeLabel{Text = FontAwesomeLabel.FAAlignJustify}
-                }
-            };
+            return new FontAwesomeLabel{
+                Text = FontAwesomeLabel.FASearch,
+                XAlign = TextAlignment.Center,
+                YAlign = TextAlignment.Center,
+                FontSize = 48,
+            };             
         }
     }
 }

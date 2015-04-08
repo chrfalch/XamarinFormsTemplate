@@ -18,7 +18,7 @@ namespace Test.NewSolution.Droid.Platform.Mvvm
         /// <param name="imageName">Image name.</param>
         public FileImageSource GetImageSource(string imageName)
         {                           
-            return imageName;
+            return imageName.ToLowerInvariant();
         }
 
         #endregion
