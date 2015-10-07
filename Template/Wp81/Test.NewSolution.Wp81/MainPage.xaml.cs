@@ -34,6 +34,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using NControl.Plugins.WP81;
 using Test.NewSolution.Wp81.Resources;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.WinPhone;
@@ -53,7 +54,8 @@ namespace Test.NewSolution.Wp81
             InitializeComponent();
 
             Forms.Init();            
-            
+            NControlViewRenderer.Init();
+
             LoadApplication(new Test.NewSolution.FormsApp.App(new ContainerProvider(), (container) =>
             {
                 // Register providers
