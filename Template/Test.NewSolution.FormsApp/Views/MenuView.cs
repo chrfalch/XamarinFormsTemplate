@@ -14,9 +14,9 @@ namespace Test.NewSolution.FormsApp.Views
         /// </summary>
         public MenuView()
         {
-            Device.OnPlatform(
-                () => Icon = ImageProvider.GetImageSource("MenuButton"),
-                () => Icon = null);            
+//            Device.OnPlatform(
+//                () => Icon = ImageProvider.GetImageSource("MenuButton"),
+//                () => Icon = null);            
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Test.NewSolution.FormsApp.Views
         /// <returns>The layout.</returns>
         protected override View CreateContents()
         {
-            return new StackLayout();
+            return new StackLayout{BackgroundColor = Color.Lime};
         }
     }
 }

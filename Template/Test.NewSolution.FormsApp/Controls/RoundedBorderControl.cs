@@ -27,8 +27,8 @@
 
 using System;
 using Xamarin.Forms;
-using NControl.Plugins.Abstractions;
 using NGraphics;
+using NControl.Abstractions;
 
 namespace Test.NewSolution.FormsApp.Controls
 {

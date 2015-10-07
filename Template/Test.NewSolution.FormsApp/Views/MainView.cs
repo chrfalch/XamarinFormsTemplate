@@ -2,6 +2,7 @@
 using Test.NewSolution.FormsApp.ViewModels;
 using Xamarin.Forms;
 using Test.NewSolution.FormsApp.Controls;
+using Test.NewSolution.FormsApp.Mvvm;
 
 namespace Test.NewSolution.FormsApp.Views
 {
@@ -16,6 +17,7 @@ namespace Test.NewSolution.FormsApp.Views
         public MainView()
         {
             DefaultBackButtonBehaviour = true;
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         /// <summary>
@@ -24,12 +26,13 @@ namespace Test.NewSolution.FormsApp.Views
         /// <returns>The layout.</returns>
         protected override View CreateContents()
         {
-            return new FontAwesomeLabel{
-                Text = FontAwesomeLabel.FASearch,
-                XAlign = TextAlignment.Center,
-                YAlign = TextAlignment.Center,
-                FontSize = 48,
-            };             
+            return new Button{
+                Text = "Click",
+                BackgroundColor = Color.Transparent,
+                Command = new Command((obj) => {
+                    NavigationManager.ToggleDrawer();
+                })
+            };            
         }
     }
 }

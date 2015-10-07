@@ -29,6 +29,11 @@ namespace Test.NewSolution.FormsApp.Mvvm
         /// </summary>
 		private static Stack<NavigationElement> _navigationPageStack = new Stack<NavigationElement>();
 
+        /// <summary>
+        /// The master detail page.
+        /// </summary>
+        private static MasterDetailPage _masterDetailPage;
+
         #endregion
 
         /// <summary>
@@ -43,6 +48,23 @@ namespace Test.NewSolution.FormsApp.Mvvm
 
             _navigationPageStack.Push(new NavigationElement{Page = mainPage});
 			return _navigationPageStack.Peek().Page;
+        }
+
+        /// <summary>
+        /// Sets the master detail master.
+        /// </summary>
+        /// <param name="page">Page.</param>
+        public static void SetMasterDetailMaster(MasterDetailPage page)
+        {
+            _masterDetailPage = page;
+        }
+
+        public static void ToggleDrawer()
+        {
+            if (_masterDetailPage == null)
+                return;
+
+            _masterDetailPage.IsPresented = !_masterDetailPage.IsPresented;
         }
 
         #region Regular Navigation

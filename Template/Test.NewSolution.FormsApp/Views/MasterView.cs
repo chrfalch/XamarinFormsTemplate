@@ -34,6 +34,7 @@ namespace Test.NewSolution.FormsApp.Views
             // Set up mainview
             var mainView = Container.Resolve<MainView>();
             Detail = new NavigationPage(mainView);
+            NavigationManager.SetMasterDetailMaster(this);
             NavigationManager.SetMainPage(Detail);
 
             IsGestureEnabled = false;
