@@ -126,7 +126,7 @@ namespace Test.NewSolution.FormsApp.ViewModels
 		/// <typeparam name="TValueType">The 1st type parameter.</typeparam>
 		protected TValueType GetValue<TValueType>(Expression<Func<object>> property) 
 		{
-			return GetValue<TValueType> (property, default(TValueType));
+            return GetValue<TValueType> (property, () => default(TValueType));
 		}
 
 		/// Returns a value from the viewmodel storage
@@ -134,10 +134,10 @@ namespace Test.NewSolution.FormsApp.ViewModels
 		/// <returns>The value.</returns>
 		/// <param name="name">Name.</param>
 		/// <typeparam name="TValueType">The 1st type parameter.</typeparam>
-		protected TValueType GetValue<TValueType>(Expression<Func<object>> property, TValueType defaultValue) 
+		protected TValueType GetValue<TValueType>(Expression<Func<object>> property, Func<TValueType> defaultValueFunc) 
 		{
 			var propertyName = PropertyNameHelper.GetPropertyName<BaseViewModel> (property);
-			return _viewModelStorage.GetObjectForKey<TValueType> (propertyName, defaultValue);
+            return _viewModelStorage.GetObjectForKey<TValueType> (propertyName, defaultValueFunc());
 		}
 
 		/// <summary>
