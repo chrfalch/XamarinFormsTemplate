@@ -8,11 +8,7 @@ namespace Test.NewSolution.Contracts.Services
     /// </summary>
     public interface IService
     {
-        /// <summary>
-        /// Initializes the async.
-        /// </summary>
-        /// <returns>The async.</returns>
-        Task InitializeAsync();
+        
     }
 }
 

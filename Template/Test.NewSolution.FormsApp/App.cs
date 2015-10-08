@@ -54,15 +54,6 @@ namespace Test.NewSolution.FormsApp
                 RegisterViews();
             }
 
-            // Initialize 
-            Task.Run(async() => {
-
-                // Initialize services
-                await Container.Resolve<IPreferenceService>().InitializeAsync().ContinueWith(t => 
-                    Container.Resolve<ILoggingService>().InitializeAsync());
-
-            });
-
             // The root page of your application
             MainPage = Container.Resolve<MasterView>();
 		}

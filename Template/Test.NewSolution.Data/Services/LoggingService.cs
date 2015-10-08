@@ -24,6 +24,11 @@ namespace Test.NewSolution.Data.Services
         /// </summary>
         private int _ignoreCount = 0;
 
+        /// <summary>
+        /// The initialization.
+        /// </summary>
+        private Task Initialization;
+
         #endregion
 
         /// <summary>
@@ -32,6 +37,7 @@ namespace Test.NewSolution.Data.Services
         public LoggingService()
         {
             LogLevel = LogLevel.All;
+            Initialization = InitializeAsync();
         }
 
         #region ILoggingService implementation
@@ -55,7 +61,7 @@ namespace Test.NewSolution.Data.Services
         /// <param name="provider">Provider.</param>
         public async Task AddProviderAsync(ILoggingProvider provider)
         {
-            await provider.InitializeAsync();
+            await Initialization;
             _providers.Add(provider);
         }
                    
