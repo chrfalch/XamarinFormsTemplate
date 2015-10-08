@@ -120,11 +120,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TinyIoC.cs" />
     <Compile Include="Platform\IoC\ContainerProvider.cs" />
-    <Compile Include="Platform\Repositories\RepositoryProvider.cs" />
     <Compile Include="Platform\Views\RoundedBorderView.cs" />
     <Compile Include="Platform\Mvvm\ImageProvider.cs" />
     <Compile Include="Platform\Renderers\FontAwesomeLabelRenderer.cs" />
     <Compile Include="SplashscreenActivity.cs" />
+    <Compile Include="Platform\Repositories\DroidConnectionProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />

@@ -33,7 +33,7 @@ namespace Test.NewSolution.Data.Repositories
         /// <summary>
         /// The repository provider.
         /// </summary>
-        private readonly IRepositoryProvider _repositoryProvider;
+        private readonly IConnectionProvider _connectionProvider;
 
 		#endregion
 
@@ -41,9 +41,9 @@ namespace Test.NewSolution.Data.Repositories
         /// Initializes a new instance of the <see cref="Test.NewSolution.Data.Repositories.Repository`1"/> class.
         /// </summary>
         /// <param name="repositoryProvider">Repository provider.</param>
-        public Repository(IRepositoryProvider repositoryProvider)
+        public Repository(IConnectionProvider connectionProvider)
         {
-            _repositoryProvider = repositoryProvider;
+            _connectionProvider = connectionProvider;
             Initialization = InitializeAsync();
         }
 
@@ -55,7 +55,7 @@ namespace Test.NewSolution.Data.Repositories
 		/// <returns>The async.</returns>
 		public Task InitializeAsync()
 		{
-            var connection = _repositoryProvider.GetSQLConnection();
+            var connection = _connectionProvider.GetSQLConnection();
 			_connection = new SQLiteAsyncConnection (() => connection);
 			return _connection.CreateTableAsync<TModel> ();
 		}

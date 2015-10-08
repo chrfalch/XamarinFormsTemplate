@@ -23,7 +23,7 @@ namespace Test.NewSolution.iOS
             LoadApplication (new App (new ContainerProvider(), (container) => {
 
                 // Register providers
-                container.Register<IRepositoryProvider, RepositoryProvider>();
+                container.Register<IConnectionProvider, RepositoryProvider>();
                 container.Register<IImageProvider, ImageProvider>();
 
             }));

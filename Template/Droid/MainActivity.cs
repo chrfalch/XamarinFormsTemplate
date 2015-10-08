@@ -29,7 +29,7 @@ namespace Test.NewSolution.Droid
             LoadApplication (new App (new ContainerProvider(), (container) => {
 
                 // Register providers
-                container.Register<IRepositoryProvider, RepositoryProvider>();
+                container.Register<IConnectionProvider, DroidConnectionProvider>();
                 container.Register<IImageProvider, ImageProvider>();
             }));
 		}

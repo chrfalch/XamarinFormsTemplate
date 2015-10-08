@@ -1,19 +1,19 @@
-﻿using System;
+using System;
+using Test.NewSolution.Data.Repositories;
 using System.Threading.Tasks;
 using System.IO;
 using SQLite.Net;
-using SQLite.Net.Platform.XamarinAndroid;
+using SQLite.Net.Platform.XamarinIOS;
 using Test.NewSolution.Contracts.Models;
-using Test.NewSolution.Data.Repositories;
 using Test.NewSolution.Contracts.Repositories;
 
-namespace Test.NewSolution.Droid.Platform.Repositories
+namespace Test.NewSolution.iOS.Platform.Repositories
 {
-    /// <summary>
-    /// Repositoryi OS platform.
-    /// </summary>
-    public class RepositoryProvider: IRepositoryProvider
-    {
+	/// <summary>
+	/// Repositoryi OS platform.
+	/// </summary>
+    public class RepositoryProvider: IConnectionProvider
+	{
         #region Private Members
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Test.NewSolution.Droid.Platform.Repositories
             var folder = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
             var filename = Path.Combine (folder, "storage.db");
             _connection = new SQLiteConnectionWithLock (
-                new SQLitePlatformAndroid(), new SQLiteConnectionString(
+                new SQLitePlatformIOS(), new SQLiteConnectionString(
                     filename, false, null));
 
             return _connection;
@@ -45,6 +45,6 @@ namespace Test.NewSolution.Droid.Platform.Repositories
 
         #endregion
 
-    }	
+	}
 }
 
