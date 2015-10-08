@@ -27,6 +27,7 @@ namespace Test.NewSolution.Droid
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
             NControl.Droid.NControlViewRenderer.Init();
+            NControl.Controls.Droid.NControls.Init();
 
             LoadApplication(new DroidAppBuilder().Build(new ContainerProvider()));
 		}

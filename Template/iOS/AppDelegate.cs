@@ -21,6 +21,7 @@ namespace Test.NewSolution.iOS
 		{
 			global::Xamarin.Forms.Forms.Init ();
             NControl.iOS.NControlViewRenderer.Init();
+            NControl.Controls.iOS.NControls.Init();
 
             LoadApplication(new TouchAppBuilder().Build(new ContainerProvider()));
 
