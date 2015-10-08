@@ -92,10 +92,10 @@
       <HintPath>..\packages\modernhttpclient.2.4.2\lib\MonoAndroid\OkHttp.dll</HintPath>
     </Reference>
     <Reference Include="NControl.Controls.Droid">
-      <HintPath>..\packages\NControl.Controls.0.6\lib\MonoAndroid10\NControl.Controls.Droid.dll</HintPath>
+      <HintPath>..\packages\NControl.Controls.0.7\lib\MonoAndroid10\NControl.Controls.Droid.dll</HintPath>
     </Reference>
     <Reference Include="NControl.Controls">
-      <HintPath>..\packages\NControl.Controls.0.6\lib\MonoAndroid10\NControl.Controls.dll</HintPath>
+      <HintPath>..\packages\NControl.Controls.0.7\lib\MonoAndroid10\NControl.Controls.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

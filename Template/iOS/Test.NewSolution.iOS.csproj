@@ -129,10 +129,10 @@
       <HintPath>..\packages\modernhttpclient.2.4.2\lib\Xamarin.iOS10\ModernHttpClient.dll</HintPath>
     </Reference>
     <Reference Include="NControl.Controls.iOS">
-      <HintPath>..\packages\NControl.Controls.0.6\lib\Xamarin.iOS10\NControl.Controls.iOS.dll</HintPath>
+      <HintPath>..\packages\NControl.Controls.0.7\lib\Xamarin.iOS10\NControl.Controls.iOS.dll</HintPath>
     </Reference>
     <Reference Include="NControl.Controls">
-      <HintPath>..\packages\NControl.Controls.0.6\lib\Xamarin.iOS10\NControl.Controls.dll</HintPath>
+      <HintPath>..\packages\NControl.Controls.0.7\lib\Xamarin.iOS10\NControl.Controls.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
