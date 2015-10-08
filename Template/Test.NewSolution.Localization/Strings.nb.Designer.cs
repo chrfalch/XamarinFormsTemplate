@@ -46,5 +46,23 @@ namespace Test.NewSolution.Localization {
                 resourceCulture = value;
             }
         }
+        
+        public static string ButtonMenu {
+            get {
+                return ResourceManager.GetString("ButtonMenu", resourceCulture);
+            }
+        }
+        
+        public static string TitleMenu {
+            get {
+                return ResourceManager.GetString("TitleMenu", resourceCulture);
+            }
+        }
+        
+        public static string AppName {
+            get {
+                return ResourceManager.GetString("AppName", resourceCulture);
+            }
+        }
     }
 }

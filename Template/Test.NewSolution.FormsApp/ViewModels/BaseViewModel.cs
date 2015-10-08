@@ -27,11 +27,6 @@ namespace Test.NewSolution.FormsApp.ViewModels
 		#region Private Members
 
 		/// <summary>
-		/// The busy count.
-		/// </summary>
-		private int _busyCount = 0;
-
-		/// <summary>
 		/// The view model storage.
 		/// </summary>
 		private readonly ViewModelStorageProvider _viewModelStorage = 
@@ -200,10 +195,10 @@ namespace Test.NewSolution.FormsApp.ViewModels
 		/// <returns>The command.</returns>
 		/// <param name="action">Action.</param>
 		/// <param name="state">State.</param>
-		protected Command GetOrCreateCommand<TViewModel>(Expression<Func<object>> commandProperty,
+        protected Command GetOrCreateCommand(Expression<Func<object>> commandProperty,
 			Command command)
 		{
-			var commandName = PropertyNameHelper.GetPropertyName<TViewModel> (commandProperty);
+            var commandName = PropertyNameHelper.GetPropertyName<BaseViewModel> (commandProperty);
 			if (!_commands.ContainsKey (commandName))
 				_commands.Add (commandName, command);
 
@@ -216,10 +211,10 @@ namespace Test.NewSolution.FormsApp.ViewModels
 		/// <returns>The command.</returns>
 		/// <param name="action">Action.</param>
 		/// <param name="state">State.</param>
-		protected Command<T> GetOrCreateCommand<TViewModel, T>(Expression<Func<object>> commandProperty,
-			Command<T> command)
+        protected Command<T> GetOrCreateCommand<T>(Expression<Func<object>> commandProperty,
+            Command<T> command)
 		{
-			var commandName = PropertyNameHelper.GetPropertyName<TViewModel> (commandProperty);
+            var commandName = PropertyNameHelper.GetPropertyName<BaseViewModel> (commandProperty);
 			if (!_commands.ContainsKey (commandName))
 				_commands.Add (commandName, command);
 
@@ -256,8 +251,7 @@ namespace Test.NewSolution.FormsApp.ViewModels
 		public virtual async Task OnAppearingAsync()
 		{
 		   // Call initialize
-            await InitializeAsync ();
-            		
+            await InitializeAsync ();            		
 		}
 
 		/// <summary>
@@ -289,17 +283,8 @@ namespace Test.NewSolution.FormsApp.ViewModels
 		/// </summary>
 		/// <value><c>true</c> if this instance is busy; otherwise, <c>false</c>.</value>
 		public bool IsBusy { 
-			get{ 
-				return _busyCount > 0;
-			}
-			set{ 
-				if (value)
-					_busyCount=1;
-				else
-					_busyCount=0;
-
-				RaisePropertyChangedEvent (() => IsBusy);
-			}
+			get{ return GetValue(() => IsBusy, () => false); }
+            set{ SetValue(() => IsBusy, value); }
 		}
 
 		/// <summary>
@@ -311,6 +296,16 @@ namespace Test.NewSolution.FormsApp.ViewModels
 			get{ return GetValue<string>(() => IsBusyText); }
 			set{ SetValue<string> (() => IsBusyText, value); }
 		}
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is busy.
+        /// </summary>
+        /// <value><c>true</c> if this instance is busy; otherwise, <c>false</c>.</value>
+        public string IsBusySubTitle 
+        { 
+            get{ return GetValue<string>(() => IsBusySubTitle); }
+            set{ SetValue<string> (() => IsBusySubTitle, value); }
+        }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance is busy.

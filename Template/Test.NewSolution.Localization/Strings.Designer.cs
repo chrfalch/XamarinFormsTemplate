@@ -47,6 +47,12 @@ namespace Test.NewSolution.Localization {
             }
         }
         
+        public static string ButtonMenu {
+            get {
+                return ResourceManager.GetString("ButtonMenu", resourceCulture);
+            }
+        }
+        
         public static string TitleMenu {
             get {
                 return ResourceManager.GetString("TitleMenu", resourceCulture);

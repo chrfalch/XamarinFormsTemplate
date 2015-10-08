@@ -29,11 +29,6 @@ namespace Test.NewSolution.FormsApp.Views
 
 		#region Private Members
 
-		/// <summary>
-		/// The view decorator.
-		/// </summary>
-		private readonly ViewDecorator<TViewModel> _viewDecorator;
-
         /// <summary>
 		/// Main relative layout
 		/// </summary>
@@ -61,18 +56,28 @@ namespace Test.NewSolution.FormsApp.Views
 			BindingContext = ViewModel;
 
 			// Bind title
-			this.SetBinding (Page.TitleProperty, GetPropertyName (vm => vm.Title));
+            this.SetBinding (Page.TitleProperty, NameOf (vm => vm.Title));
 
 			// Loading/Progress overlay
 			_layout = new RelativeLayout ();
-
 			var contents = CreateContents ();
-
-			// Activity overflay and indiciator
-			_viewDecorator = new ViewDecorator<TViewModel> (_layout, contents);
+            _layout.Children.Add(contents, () => _layout.Bounds);
 
 			// Set our content to be the relative layout with progress overlays etc.
 			Content = _layout;
+
+            // Listen for changes to busy
+            ListenForPropertyChange(mn => mn.IsBusy, () =>{
+                ProgressHelper.UpdateProgress(ViewModel.IsBusy, ViewModel.IsBusyText, ViewModel.IsBusySubTitle);
+            });
+
+            ListenForPropertyChange(mn => mn.IsBusyText, () =>{
+                ProgressHelper.UpdateProgress(ViewModel.IsBusy, ViewModel.IsBusyText, ViewModel.IsBusySubTitle);
+            });
+
+            ListenForPropertyChange(mn => mn.IsBusySubTitle, () =>{
+                ProgressHelper.UpdateProgress(ViewModel.IsBusy, ViewModel.IsBusyText, ViewModel.IsBusySubTitle);
+            });
 		}
 
 		#endregion
@@ -95,8 +100,7 @@ namespace Test.NewSolution.FormsApp.Views
 		{
             base.OnAppearing();
 
-            await ViewModel.OnAppearingAsync();
-			_viewDecorator.OnAppearing ();
+            await ViewModel.OnAppearingAsync();			
 		}
 
         /// <summary>
@@ -106,8 +110,7 @@ namespace Test.NewSolution.FormsApp.Views
 		{
 			base.OnDisappearing ();
 
-			ViewModel.OnDisappearingAsync ();
-			_viewDecorator.OnDisappearing ();
+			ViewModel.OnDisappearingAsync ();			
 		}
 
         /// <summary>
@@ -168,37 +171,25 @@ namespace Test.NewSolution.FormsApp.Views
 				Constraint.Constant(568));
 		}
 
-		/// <summary>
-		/// Calls the notify property changed event if it is attached. By using some
-		/// Expression/Func magic we get compile time type checking on our property
-		/// names by using this method instead of calling the event with a string in code.
-		/// </summary>
-		/// <param name="property">Property.</param>
-		protected string GetPropertyName<TOwner>(Expression<Func<TOwner, object>> property)
-		{
-			return PropertyNameHelper.GetPropertyName<TOwner> (property);
-		}
-
-		/// <summary>
-		/// Calls the notify property changed event if it is attached. By using some
-		/// Expression/Func magic we get compile time type checking on our property
-		/// names by using this method instead of calling the event with a string in code.
-		/// </summary>
-		/// <param name="property">Property.</param>
-		protected string GetPropertyName(Expression<Func<TViewModel, object>> property)
-		{
-			return PropertyNameHelper.GetPropertyName<TViewModel> (property);
-		}
+        /// <summary>
+        /// Returns the name of the member
+        /// </summary>
+        /// <returns>The of.</returns>
+        /// <param name="prop">Property.</param>
+        public string NameOf(Expression<Func<TViewModel, object>> property)
+        {
+            return PropertyNameHelper.GetPropertyName<TViewModel> (property);
+        }
 
         /// <summary>
         /// Listens for property change.
         /// </summary>
         /// <param name="property">Property.</param>
         /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
-        protected void ListenForPropertyChange<TObject>(Expression<Func<TObject, object>> property, TObject obj, Action callback)
+        protected void ListenForPropertyChange(Expression<Func<TViewModel, object>> property, Action callback)
         {
             var changeListener = new PropertyChangeListener();
-            changeListener.Listen<TObject>(property, obj, callback);
+            changeListener.Listen<TViewModel>(property, ViewModel, callback);
             _propertyChangeListeners.Add(changeListener);
         }
 		#endregion

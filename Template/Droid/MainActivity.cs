@@ -14,6 +14,7 @@ using Test.NewSolution.Droid.Platform.Repositories;
 using Test.NewSolution.Droid.Platform.Mvvm;
 using Test.NewSolution.FormsApp.Mvvm;
 using Test.NewSolution.FormsApp.IoC;
+using Acr.UserDialogs;
 
 namespace Test.NewSolution.Droid
 {
@@ -28,6 +29,7 @@ namespace Test.NewSolution.Droid
 			global::Xamarin.Forms.Forms.Init (this, bundle);
             NControl.Droid.NControlViewRenderer.Init();
             NControl.Controls.Droid.NControls.Init();
+            UserDialogs.Init(this);
 
             LoadApplication(new DroidAppBuilder().Build(new ContainerProvider()));
 		}

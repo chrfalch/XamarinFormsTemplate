@@ -70,4 +70,9 @@
     <comment>App Name</comment>
   </data>
 
+  <data name="ButtonMenu" xml:space="preserve">
+    <value>Show Menu</value>
+    <comment>Menu Button Title</comment>
+  </data>
+
 </root>    

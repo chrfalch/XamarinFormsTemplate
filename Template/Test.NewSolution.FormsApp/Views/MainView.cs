@@ -1,8 +1,7 @@
 ﻿using System;
 using Test.NewSolution.FormsApp.ViewModels;
 using Xamarin.Forms;
-using Test.NewSolution.FormsApp.Controls;
-using Test.NewSolution.FormsApp.Mvvm;
+using Test.NewSolution.Localization;
 
 namespace Test.NewSolution.FormsApp.Views
 {
@@ -27,11 +26,9 @@ namespace Test.NewSolution.FormsApp.Views
         protected override View CreateContents()
         {
             return new Button{
-                Text = "Click",
+                Text = Strings.ButtonMenu,
                 BackgroundColor = Color.Transparent,
-                Command = new Command((obj) => {
-                    NavigationManager.ToggleDrawer();
-                })
+                Command = ViewModel.ShowMenuCommand
             };            
         }
     }
