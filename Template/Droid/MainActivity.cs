@@ -13,6 +13,7 @@ using Test.NewSolution.Contracts.Repositories;
 using Test.NewSolution.Droid.Platform.Repositories;
 using Test.NewSolution.Droid.Platform.Mvvm;
 using Test.NewSolution.FormsApp.Mvvm;
+using Test.NewSolution.FormsApp.IoC;
 
 namespace Test.NewSolution.Droid
 {
@@ -27,12 +28,7 @@ namespace Test.NewSolution.Droid
 			global::Xamarin.Forms.Forms.Init (this, bundle);
             NControl.Droid.NControlViewRenderer.Init();
 
-            LoadApplication (new App (new ContainerProvider(), (container) => {
-
-                // Register providers
-                container.Register<IConnectionProvider, DroidConnectionProvider>();
-                container.Register<IImageProvider, DroidImageProvider>();
-            }));
+            LoadApplication(new DroidAppBuilder().Build(new ContainerProvider()));
 		}
 	}
 }

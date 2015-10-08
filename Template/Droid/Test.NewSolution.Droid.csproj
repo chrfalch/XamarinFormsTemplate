@@ -125,6 +125,7 @@
     <Compile Include="SplashscreenActivity.cs" />
     <Compile Include="Platform\Repositories\DroidConnectionProvider.cs" />
     <Compile Include="Platform\Mvvm\DroidImageProvider.cs" />
+    <Compile Include="DroidAppBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />

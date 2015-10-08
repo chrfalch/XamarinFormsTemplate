@@ -20,53 +20,15 @@ namespace Test.NewSolution.FormsApp
     /// </summary>
 	public class App : Application
 	{                
-        #region Private Members
-
-        /// <summary>
-        /// The initialized.
-        /// </summary>
-        private bool _initialized = false;
-
-        #endregion
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Test.NewSolution.App"/> class.
         /// </summary>
         /// <param name="typeResolveProvider">Type resolve provider.</param>
-        public App (IContainerProvider containerProvider, Action<IContainerProvider> setupContainerCallback)
+        public App ()
 		{
-            // Save container
-            Container = containerProvider;
-
-            // Only fill container if it has not been filled yet
-            if (!_initialized)
-            {
-                _initialized = true;
-
-                // Set up container
-                SetupContainer();
-
-                // Let the caller setup its container
-                if (setupContainerCallback != null)
-                    setupContainerCallback(Container);
-
-                // Register views
-                RegisterViews();
-            }
-
             // The root page of your application
             MainPage = Container.Resolve<MasterView>();
 		}
-
-        #region App Properties
-
-        /// <summary>
-        /// Gets the container.
-        /// </summary>
-        /// <value>The container.</value>
-        public IContainerProvider Container { get; private set;}
-
-        #endregion
 
         #region App Lifecycle Callbacks
 
@@ -98,32 +60,6 @@ namespace Test.NewSolution.FormsApp
 			// Handle when your app resumes
 		}
 
-        #endregion
-
-        #region Private Members
-
-        /// <summary>
-        /// Setups the container.
-        /// </summary>
-        private void SetupContainer()
-        {
-            // Services
-            Container.RegisterSingleton<IPreferenceService, PreferenceService>();
-            Container.RegisterSingleton<ILoggingService, LoggingService>();
-
-            // Repositories
-            Container.RegisterSingleton<IRepository<PreferenceModel>, Repository<PreferenceModel>>();
-        }
-
-        /// <summary>
-        /// Registers the views.
-        /// </summary>
-        private void RegisterViews()
-        {
-            ViewManager.RegisterView<MasterViewModel, MasterView>();
-            ViewManager.RegisterView<MenuViewModel, MenuView>();
-            ViewManager.RegisterView<MainViewModel, MainView>();
-        }
         #endregion
 	}
 }

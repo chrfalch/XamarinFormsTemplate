@@ -19,13 +19,33 @@ namespace Test.NewSolution.FormsApp.IoC
     /// </summary>
     public static class Container
     {
+        #region Private Static Members
+
+        /// <summary>
+        /// Instance
+        /// </summary>
+        private static IContainerProvider _containerProvider;
+
+        #endregion
+
+        /// <summary>
+        /// Initialize the specified provider.
+        /// </summary>
+        /// <param name="provider">Provider.</param>
+        public static void Initialize(IContainerProvider provider)
+        {
+            _containerProvider = provider;
+        }
+
+        #region Members
+
         /// <summary>
         /// Resolves the given type into an instance
         /// </summary>
         /// <typeparam name="TTypeToResolve">The 1st type parameter.</typeparam>
         public static TTypeToResolve Resolve<TTypeToResolve>() where TTypeToResolve: class
         {
-            return (Application.Current as App).Container.Resolve<TTypeToResolve>();
+            return _containerProvider.Resolve<TTypeToResolve>();
         }
 
         /// <summary>
@@ -34,7 +54,7 @@ namespace Test.NewSolution.FormsApp.IoC
         /// <typeparam name="TTypeToResolve">The 1st type parameter.</typeparam>
         public static object Resolve(Type typeToResolve)
         {
-            return (Application.Current as App).Container.Resolve(typeToResolve);
+            return _containerProvider.Resolve(typeToResolve);
         }
 
         /// <summary>
@@ -42,10 +62,10 @@ namespace Test.NewSolution.FormsApp.IoC
         /// </summary>
         /// <typeparam name="RegisterType">The 1st type parameter.</typeparam>
         /// <typeparam name="RegisterImplementation">The 2nd type parameter.</typeparam>
-        public static void RegisterType<RegisterType2, RegisterImplementation> () where RegisterType2 : class 
+        public static void Register<RegisterType2, RegisterImplementation> () where RegisterType2 : class 
             where RegisterImplementation : class, RegisterType2
         {
-            (Application.Current as App).Container.Register<RegisterType2, RegisterImplementation>();
+            _containerProvider.Register<RegisterType2, RegisterImplementation>();
         }
 
         /// <summary>
@@ -57,7 +77,7 @@ namespace Test.NewSolution.FormsApp.IoC
             where RegisterType : class 
             where RegisterImplementation : class, RegisterType
         {
-            (Application.Current as App).Container.Register<RegisterType, RegisterImplementation>(implementation);
+            _containerProvider.Register<RegisterType, RegisterImplementation>(implementation);
         }
 
         /// <summary>
@@ -67,7 +87,7 @@ namespace Test.NewSolution.FormsApp.IoC
         /// <typeparam name="RegisterImplementation">The 2nd type parameter.</typeparam>
         public static void Register(Type registerType, Type registerImplementation)
         {
-            (Application.Current as App).Container.Register(registerType, registerImplementation);
+            _containerProvider.Register(registerType, registerImplementation);
         }
 
         /// <summary>
@@ -78,7 +98,7 @@ namespace Test.NewSolution.FormsApp.IoC
         public static void RegisterSingleton<RegisterType, RegisterImplementation> () where RegisterType : class 
             where RegisterImplementation : class, RegisterType
         {
-            (Application.Current as App).Container.RegisterSingleton<RegisterType, RegisterImplementation>();
+            _containerProvider.RegisterSingleton<RegisterType, RegisterImplementation>();
         }
 
         /// <summary>
@@ -88,8 +108,9 @@ namespace Test.NewSolution.FormsApp.IoC
         /// <typeparam name="RegisterImplementation">The 2nd type parameter.</typeparam>
         public static void RegisterSingleton(Type registerType, Type registerImplementation)
         {
-            (Application.Current as App).Container.RegisterSingleton(registerType, registerImplementation);
+            _containerProvider.RegisterSingleton(registerType, registerImplementation);
         }
+        #endregion
     }
 }
 
