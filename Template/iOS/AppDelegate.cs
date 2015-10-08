@@ -19,12 +19,14 @@ namespace Test.NewSolution.iOS
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init ();
+            NControl.iOS.NControlViewRenderer.Init();
+
 
             LoadApplication (new App (new ContainerProvider(), (container) => {
 
                 // Register providers
-                container.Register<IConnectionProvider, RepositoryProvider>();
-                container.Register<IImageProvider, ImageProvider>();
+                container.Register<IConnectionProvider, TouchConnectionProvider>();
+                container.Register<IImageProvider, TouchImageProvider>();
 
             }));
 

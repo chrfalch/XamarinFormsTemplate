@@ -25,12 +25,13 @@ namespace Test.NewSolution.Droid
 			base.OnCreate (bundle);
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
+            NControl.Droid.NControlViewRenderer.Init();
 
             LoadApplication (new App (new ContainerProvider(), (container) => {
 
                 // Register providers
                 container.Register<IConnectionProvider, DroidConnectionProvider>();
-                container.Register<IImageProvider, ImageProvider>();
+                container.Register<IImageProvider, DroidImageProvider>();
             }));
 		}
 	}

@@ -121,10 +121,10 @@
     <Compile Include="TinyIoC.cs" />
     <Compile Include="Platform\IoC\ContainerProvider.cs" />
     <Compile Include="Platform\Views\RoundedBorderView.cs" />
-    <Compile Include="Platform\Mvvm\ImageProvider.cs" />
     <Compile Include="Platform\Renderers\FontAwesomeLabelRenderer.cs" />
     <Compile Include="SplashscreenActivity.cs" />
     <Compile Include="Platform\Repositories\DroidConnectionProvider.cs" />
+    <Compile Include="Platform\Mvvm\DroidImageProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />

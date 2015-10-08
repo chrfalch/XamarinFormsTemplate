@@ -2,12 +2,12 @@
 using Test.NewSolution.FormsApp.Mvvm;
 using Xamarin.Forms;
 
-namespace Test.NewSolution.iOS.Platform.Mvvm
+namespace Test.NewSolution.Droid.Platform.Mvvm
 {
     /// <summary>
     /// Image provider.
     /// </summary>
-    public class ImageProvider: IImageProvider
+    public class DroidImageProvider: IImageProvider
     {
         #region IImageProvider implementation
 
@@ -17,8 +17,8 @@ namespace Test.NewSolution.iOS.Platform.Mvvm
         /// <returns>The image.</returns>
         /// <param name="imageName">Image name.</param>
         public FileImageSource GetImageSource(string imageName)
-        {
-            return imageName;
+        {                           
+            return imageName.ToLowerInvariant();
         }
 
         #endregion

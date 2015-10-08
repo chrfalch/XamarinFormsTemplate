@@ -169,8 +169,8 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="TinyIoC.cs" />
     <Compile Include="Platform\IoC\ContainerProvider.cs" />
-    <Compile Include="Platform\Mvvm\ImageProvider.cs" />
     <Compile Include="Platform\Repositories\TouchConnectionProvider.cs" />
+    <Compile Include="Platform\Mvvm\TouchImageProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="ITunesArtwork.png" />

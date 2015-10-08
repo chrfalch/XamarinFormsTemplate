@@ -12,7 +12,7 @@ namespace Test.NewSolution.iOS.Platform.Repositories
 	/// <summary>
 	/// Repositoryi OS platform.
 	/// </summary>
-    public class RepositoryProvider: IConnectionProvider
+    public class TouchConnectionProvider: IConnectionProvider
 	{
         #region Private Members
 

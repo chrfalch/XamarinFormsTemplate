@@ -12,7 +12,7 @@ namespace Test.NewSolution.Droid.Platform.Repositories
     /// <summary>
     /// Repositoryi OS platform.
     /// </summary>
-    public class RepositoryProvider: IConnectionProvider
+    public class DroidConnectionProvider: IConnectionProvider
     {
         #region Private Members
 

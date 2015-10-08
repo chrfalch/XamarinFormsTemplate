@@ -6,7 +6,7 @@ namespace Test.NewSolution.Contracts.Repositories
     /// <summary>
     /// Provider for the repository
     /// </summary>
-    public interface IRepositoryProvider
+    public interface IConnectionProvider
     {
         /// <summary>
         /// Gets the SQL connection.
