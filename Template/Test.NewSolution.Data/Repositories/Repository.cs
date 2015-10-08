@@ -26,9 +26,9 @@ namespace Test.NewSolution.Data.Repositories
 		private SQLiteAsyncConnection _connection;
 
         /// <summary>
-        /// The initialized flag.
+        /// The initialization task
         /// </summary>
-        private bool _initializedFlag = false;
+        private Task Initialization;
 
         /// <summary>
         /// The repository provider.
@@ -44,6 +44,7 @@ namespace Test.NewSolution.Data.Repositories
         public Repository(IRepositoryProvider repositoryProvider)
         {
             _repositoryProvider = repositoryProvider;
+            Initialization = InitializeAsync();
         }
 
 		#region IRepository implementation
@@ -55,8 +56,6 @@ namespace Test.NewSolution.Data.Repositories
 		public Task InitializeAsync()
 		{
             var connection = _repositoryProvider.GetSQLConnection();
-
-            _initializedFlag = true;
 			_connection = new SQLiteAsyncConnection (() => connection);
 			return _connection.CreateTableAsync<TModel> ();
 		}
@@ -66,11 +65,10 @@ namespace Test.NewSolution.Data.Repositories
 		/// </summary>
 		/// <returns>The async.</returns>
 		/// <param name="entity">Entity.</param>
-		public Task UpdateAsync (TModel entity) 
+		public async Task UpdateAsync (TModel entity) 
 		{
-            EnsureInitialized();
-
-			return _connection.UpdateAsync (entity);
+            await Initialization;
+			await _connection.UpdateAsync (entity);
 		}
 
 		/// <summary>
@@ -78,11 +76,10 @@ namespace Test.NewSolution.Data.Repositories
 		/// </summary>
 		/// <returns>The async.</returns>
 		/// <param name="entity">Entity.</param>
-		public Task InsertAsync (TModel entity) 
+		public async Task InsertAsync (TModel entity) 
 		{
-            EnsureInitialized();
-
-			return _connection.InsertAsync (entity);
+            await Initialization;
+			await _connection.InsertAsync (entity);
 		}
 
 		/// <summary>
@@ -90,21 +87,19 @@ namespace Test.NewSolution.Data.Repositories
 		/// </summary>
 		/// <returns>The async.</returns>
 		/// <param name="entity">Entity.</param>
-		public Task DeleteAsync (TModel entity) 
+		public async Task DeleteAsync (TModel entity) 
 		{
-            EnsureInitialized();
-
-			return _connection.DeleteAsync (entity);
+            await Initialization;
+			await _connection.DeleteAsync (entity);
 		}
 
         /// <summary>
         /// Deletes all entities
         /// </summary>
-        public Task DeleteAllAsync () 
+        public async Task DeleteAllAsync () 
         {
-            EnsureInitialized();
-
-            return _connection.DeleteAllAsync<TModel>(default(CancellationToken));
+            await Initialization;
+            await _connection.DeleteAllAsync<TModel>(default(CancellationToken));
         }
 
 		/// <summary>
@@ -113,7 +108,7 @@ namespace Test.NewSolution.Data.Repositories
 		/// <returns>The items async.</returns>
 		public async Task<IEnumerable<TModel>> GetItemsAsync () 
 		{
-            EnsureInitialized();
+            await Initialization;
 
 			var retVal = await _connection.Table<TModel> ().ToListAsync();
 			return retVal.Cast<TModel> ();
@@ -126,7 +121,7 @@ namespace Test.NewSolution.Data.Repositories
 		/// <param name="id">Identifier.</param>
 		public async Task<TModel> GetItemByIdAsync (string id) 
 		{
-            EnsureInitialized();
+            await Initialization;
 
 			var retVal = await _connection.Table<TModel> ().Where (mn => mn.Id == id).FirstOrDefaultAsync ();
 			if (retVal == null)
@@ -139,11 +134,11 @@ namespace Test.NewSolution.Data.Repositories
 		/// Returns the number of items in the repository
 		/// </summary>
 		/// <returns>The count async.</returns>
-		public Task<int> GetCountAsync()
+		public async Task<int> GetCountAsync()
 		{
-            EnsureInitialized();
+            await Initialization;
 
-			return _connection.Table<TModel> ().CountAsync ();
+			return await _connection.Table<TModel> ().CountAsync ();
 		}
 
         /// <summary>
@@ -153,26 +148,12 @@ namespace Test.NewSolution.Data.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<TModel>> GetItemsAsync(Expression<Func<TModel, bool>> predExpr)
         {
-            EnsureInitialized();
+            await Initialization;
 
             var retVal = await _connection.Table<TModel>().Where(predExpr).ToListAsync();
             return retVal.Cast<TModel>();
         }
 		#endregion
-
-        #region Private Members
-
-        /// <summary>
-        /// Ensures that the class has been initialized and raises an exception if not
-        /// </summary>
-        private void EnsureInitialized()
-        {
-            if (_initializedFlag)
-                return;
-
-            throw new InvalidOperationException("Repository needs to be initialized before it is used.");
-        }
-        #endregion
     }
 }
 

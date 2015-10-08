@@ -9,12 +9,7 @@ namespace Test.NewSolution.Repositories
 {
     public interface IRepository<TModel> where TModel: RepositoryModel, new()
 	{
-		/// <summary>
-		/// Initializes the provider.
-		/// </summary>
-		/// <returns>The async.</returns>
-		Task InitializeAsync () ;
-
+	
 		/// <summary>
 		/// Updated the entity
 		/// </summary>

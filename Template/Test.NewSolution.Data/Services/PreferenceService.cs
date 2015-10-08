@@ -18,14 +18,19 @@ namespace Test.NewSolution.Data.Services
         #region Private Members
 
         /// <summary>
+        /// The in persist.
+        /// </summary>
+        private bool _inPersist;
+
+        /// <summary>
         /// The update count.
         /// </summary>
         private int _updateCount = 0;
 
         /// <summary>
-        /// The initialized flag.
+        /// The initialization task
         /// </summary>
-        private bool _initializedFlag = false;
+        private Task Initialization;
 
         /// <summary>
         /// The logging service.
@@ -52,6 +57,7 @@ namespace Test.NewSolution.Data.Services
         {
             _preferenceModelRepository = preferenceModelRepository;
             _loggingService = loggingService;
+            Initialization = InitializeAsync();
         }
 
         #region IPreferenceService implementation
@@ -60,10 +66,36 @@ namespace Test.NewSolution.Data.Services
         /// Persists the data to disk
         /// </summary>
         /// <returns>The async.</returns>
+        /// <summary>
+        /// Persists the data to disk
+        /// </summary>
+        /// <returns>The async.</returns>
         public async Task PersistAsync()
-        {
-            foreach (var model in _cache)
-                await _preferenceModelRepository.UpdateAsync(model.Value);
+        {       
+            if (_inPersist)
+                return;
+
+            _inPersist = true;
+
+            await Initialization;
+
+            try
+            {
+                var cacheCopy = new Dictionary<string, PreferenceModel>();
+
+                lock (_cache)
+                {
+                    foreach (var element in _cache)
+                        cacheCopy.Add(element.Key, new PreferenceModel { Id = element.Value.Id, ValueAsJSON = element.Value.ValueAsJSON});
+                }
+
+                foreach (var keyValue in cacheCopy)
+                    await _preferenceModelRepository.UpdateAsync(keyValue.Value);                
+            }
+            finally
+            {
+                _inPersist = false;
+            }
         }
 
         #endregion
@@ -76,9 +108,6 @@ namespace Test.NewSolution.Data.Services
         /// <returns>The async.</returns>
         public async Task InitializeAsync()
         {
-            // Init repo
-            await _preferenceModelRepository.InitializeAsync();
-
             // Fill Cache
             foreach (var model in await _preferenceModelRepository.GetItemsAsync())
                 _cache.Add(model.Id, model);              
@@ -96,44 +125,43 @@ namespace Test.NewSolution.Data.Services
         /// <typeparam name="T">The 1st type parameter.</typeparam>
         private void SetObjectForKey<T>(Expression<Func<object>> property, T value)
         {
-            EnsureInitialized();
+            Task.Run(async () => await Initialization).Wait();
 
             var key = PropertyNameHelper.GetPropertyName<PreferenceService>(property);
 
-            _loggingService.Log(LogLevel.Verbose, this, "SetObject(key={0}, value={1})", key, value);
-
             var json = JsonConvert.SerializeObject(value);
 
-            Task.Run(async () =>
-                {
-                    if (!_cache.ContainsKey(key))
-                    {
-                        // Add as new model to the repo
-                        var item = new PreferenceModel{ Id = key, ValueAsJSON = json };
-                        await _preferenceModelRepository.InsertAsync(item);
+            if (!_cache.ContainsKey(key))
+            {
+                // create new model
+                var item = new PreferenceModel{ Id = key, ValueAsJSON = json };
 
-                        // Add to cache as well
-                        _cache.Add(key, item);
-                    }
-                    else
-                    {
-                        // Update in cache
-                        var item = _cache[key];
-                        item.ValueAsJSON = json;
-                    }
+                // Add to cache 
+                _cache.Add(key, item);
 
-                    // Persist after a number of updates
-                    if(_updateCount > 20)
-                    {
-                        await PersistAsync();
-                        _updateCount = 0;
-                    }
-                    else
-                    {
-                        _updateCount++;
-                    }
+                // Add to the repo                
+                Task.Run(async () => await _preferenceModelRepository.InsertAsync(item)).Wait();
 
-                }).Wait();        
+            }
+            else
+            {
+                // Update in cache
+                var item = _cache[key];
+                item.ValueAsJSON = json;
+            }
+
+            // Persist after a number of updates
+            if(_updateCount > 20)
+            {
+                Task.Run(async () => await PersistAsync()).Wait();
+                _updateCount = 0;
+            }
+            else
+            {
+                _updateCount++;
+            }
+
+            _loggingService.Log(LogLevel.Verbose, this, "SetObject(key={0}, value={1})", key, value);
         }
 
         /// <summary>
@@ -144,7 +172,7 @@ namespace Test.NewSolution.Data.Services
         /// <typeparam name="T">The 1st type parameter.</typeparam>
         private T GetObjectForKey<T>(Expression<Func<object>> property, T defaultValue)
         {
-            EnsureInitialized();
+            Task.Run(async () => await Initialization).Wait();
 
             var key = PropertyNameHelper.GetPropertyName<PreferenceService>(property);
 
@@ -162,19 +190,6 @@ namespace Test.NewSolution.Data.Services
         }
         #endregion
 
-        #region Private Members
-
-        /// <summary>
-        /// Ensures that the class has been initialized and raises an exception if not
-        /// </summary>
-        private void EnsureInitialized()
-        {
-            if (_initializedFlag)            
-                return;
-
-            throw new InvalidOperationException("Preferences service needs to be initialized before it is used.");
-        }
-        #endregion
     }
 }
 
