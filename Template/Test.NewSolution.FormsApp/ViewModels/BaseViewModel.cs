@@ -270,7 +270,7 @@ namespace Test.NewSolution.FormsApp.ViewModels
 		/// Returns the view title
 		/// </summary>
 		/// <value>The view title.</value>
-		public virtual string Title { get { return string.Empty; } }
+        public virtual string Title { get { return this.GetType().Name; } }
 
         /// <summary>
         /// Gets the back button command.
