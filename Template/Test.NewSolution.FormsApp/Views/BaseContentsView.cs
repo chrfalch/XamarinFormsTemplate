@@ -182,6 +182,16 @@ namespace Test.NewSolution.FormsApp.Views
         }
 
         /// <summary>
+        /// Returns the name of the member
+        /// </summary>
+        /// <returns>The of.</returns>
+        /// <param name="prop">Property.</param>
+        public string NameOf<TModel>(Expression<Func<TModel, object>> property)
+        {
+            return PropertyNameHelper.GetPropertyName<TModel> (property);
+        }
+
+        /// <summary>
         /// Listens for property change.
         /// </summary>
         /// <param name="property">Property.</param>
