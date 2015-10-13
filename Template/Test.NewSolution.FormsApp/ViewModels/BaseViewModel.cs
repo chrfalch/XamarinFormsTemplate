@@ -98,6 +98,29 @@ namespace Test.NewSolution.FormsApp.ViewModels
 
             RaisePropertyChangedEvent (property);
 
+            return true;
+        }
+
+        /// <summary>
+        /// Calls the notify property changed event if it is attached. By using some
+        /// Expression/Func magic we get compile time type checking on our property
+        /// names by using this method instead of calling the event with a string in code.
+        /// </summary>
+        /// <param name="property">Property.</param>
+        protected override void RaisePropertyChangedEvent (Expression<Func<object>> property)
+        {
+            base.RaisePropertyChangedEvent (property);
+
+            var propertyName = PropertyNameHelper.GetPropertyName<BaseViewModel>(property);
+
+            CheckDependantPropertiesAndCommands (propertyName);
+        }
+
+        /// <summary>
+        /// Checks the dependant properties and commands.
+        /// </summary>
+        protected void CheckDependantPropertiesAndCommands (string propertyName)
+        {
             // Dependent properties?
             if (_propertyDependencies.ContainsKey (propertyName)) {
                 foreach (var dependentProperty in _propertyDependencies[propertyName])
@@ -109,8 +132,6 @@ namespace Test.NewSolution.FormsApp.ViewModels
                 foreach (var dependentCommand in _commandDependencies[propertyName])
                     RaiseCommandStateChangedEvent (dependentCommand);
             }
-
-            return true;
         }
 
         /// <summary>

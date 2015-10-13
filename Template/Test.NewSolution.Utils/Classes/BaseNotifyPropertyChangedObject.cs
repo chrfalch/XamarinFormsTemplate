@@ -37,7 +37,7 @@ namespace Test.NewSolution.Classes
 		/// names by using this method instead of calling the event with a string in code.
 		/// </summary>
 		/// <param name="property">Property.</param>
-		protected void RaisePropertyChangedEvent(Expression<Func<object>> property)
+		protected virtual void RaisePropertyChangedEvent(Expression<Func<object>> property)
 		{
 			if (PropertyChanged == null)
 				return;
