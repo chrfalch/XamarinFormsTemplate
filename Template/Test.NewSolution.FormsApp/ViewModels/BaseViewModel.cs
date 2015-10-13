@@ -267,12 +267,26 @@ namespace Test.NewSolution.FormsApp.ViewModels
         }
 
         /// <summary>
+        /// Initializes the viewmodel with a parameter. Called from the navigation manager through the view 
+        /// as a IViewWithParameter instance
+        /// </summary>
+        /// <returns>The async.</returns>
+        /// <param name="parameter">Parameter.</param>
+        /// <typeparam name="TParameter">The 1st type parameter.</typeparam>
+        public virtual Task InitializeAsync (object parameter)
+        {
+            return Task.FromResult(true);
+        }
+
+        /// <summary>
         /// Override to implement logic when the view has been set up on screen
         /// </summary>
-        public virtual async Task OnAppearingAsync()
+        public async Task OnAppearingAsync()
         {
             // Call initialize
-            await InitializeAsync ();                   
+            await InitializeAsync ();
+
+            IsOnAppearingCalled = true;
         }
 
         /// <summary>
@@ -292,6 +306,16 @@ namespace Test.NewSolution.FormsApp.ViewModels
         /// </summary>
         /// <value>The view title.</value>
         public virtual string Title { get { return this.GetType().Name; } }
+
+        /// <summary>
+        /// Flag that is set when OnAppearing was called.
+        /// </summary>
+        /// <value><c>true</c> if this instance is on appearing called; otherwise, <c>false</c>.</value>
+        public bool IsOnAppearingCalled 
+        {
+            get { return GetValue<bool>(() => IsOnAppearingCalled); }
+            set { SetValue<bool>(() => IsOnAppearingCalled, value); }
+        }
 
         /// <summary>
         /// Gets the back button command.

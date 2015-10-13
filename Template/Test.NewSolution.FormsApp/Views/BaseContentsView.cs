@@ -17,6 +17,7 @@ using Test.NewSolution.FormsApp.IoC;
 using Test.NewSolution.Helpers;
 using Test.NewSolution.FormsApp.ViewModels;
 using Test.NewSolution.FormsApp.Mvvm;
+using System.Threading.Tasks;
 
 namespace Test.NewSolution.FormsApp.Views
 {
@@ -203,6 +204,21 @@ namespace Test.NewSolution.FormsApp.Views
             _propertyChangeListeners.Add(changeListener);
         }
 		#endregion
+
+        #region IViewWithParameter implementation
+
+        /// <summary>
+        /// Initializes the async.
+        /// </summary>
+        /// <returns>The async.</returns>
+        /// <param name="parameter">Parameter.</param>
+        /// <typeparam name="TParameter">The 1st type parameter.</typeparam>
+        public Task InitializeAsync (object parameter)
+        {
+            return ViewModel.InitializeAsync(parameter);
+        }
+
+        #endregion
 	}
 }
 
