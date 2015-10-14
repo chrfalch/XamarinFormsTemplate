@@ -27,7 +27,7 @@ namespace Test.NewSolution.FormsApp.Mvvm
         /// <summary>
         /// The navigation page stack.
         /// </summary>
-		private static Stack<NavigationElement> _navigationPageStack = new Stack<NavigationElement>();
+        private static Stack<NavigationElement> _navigationPageStack = new Stack<NavigationElement>();
 
         /// <summary>
         /// The master detail page.
@@ -47,7 +47,7 @@ namespace Test.NewSolution.FormsApp.Mvvm
                 _navigationPageStack.Pop();
 
             _navigationPageStack.Push(new NavigationElement{Page = mainPage});
-			return _navigationPageStack.Peek().Page;
+            return _navigationPageStack.Peek().Page;
         }
 
         /// <summary>
@@ -59,6 +59,9 @@ namespace Test.NewSolution.FormsApp.Mvvm
             _masterDetailPage = page;
         }
 
+        /// <summary>
+        /// Toggles the drawer.
+        /// </summary>
         public static void ToggleDrawer()
         {
             if (_masterDetailPage == null)
@@ -82,27 +85,65 @@ namespace Test.NewSolution.FormsApp.Mvvm
         /// Navigates to the provided view model of type
         /// </summary>
         /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
-        public static Task NavigateToViewModelAsync<TViewModel>() 
-			where TViewModel : BaseViewModel
+        public static Task NavigateToViewModelAsync(Type viewModelType, bool animate)             
         {       
-            return NavigateToViewModelAsync<TViewModel>(null);
+            return NavigateToViewModelAsync(viewModelType, null, animate);
         }
-
-		/// <summary>
-		/// Navigates to the provided view model of type
-		/// </summary>
-		/// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
-		public static Task NavigateToViewModelAsync<TViewModel>(object parameter) 
-			where TViewModel : BaseViewModel
-		{       
-            return NavigateToViewModelAsync(typeof(TViewModel), parameter);
-		}
 
         /// <summary>
         /// Navigates to the provided view model of type
         /// </summary>
         /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
-        public static async Task NavigateToViewModelAsync(Type viewModelType, object parameter)
+        public static Task NavigateToViewModelAsync<TViewModel>() 
+            where TViewModel : BaseViewModel
+        {       
+            return NavigateToViewModelAsync<TViewModel>(null);
+        }
+
+        /// <summary>
+        /// Navigates to the provided view model of type
+        /// </summary>
+        /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
+        public static Task NavigateToViewModelAsync<TViewModel>(bool animate) 
+            where TViewModel : BaseViewModel
+        {       
+            return NavigateToViewModelAsync<TViewModel>(null, animate);
+        }
+
+        /// <summary>
+        /// Navigates to the provided view model of type
+        /// </summary>
+        /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
+        public static Task NavigateToViewModelAsync<TViewModel>(object parameter) 
+            where TViewModel : BaseViewModel
+        {       
+            return NavigateToViewModelAsync(typeof(TViewModel), parameter);
+        }
+
+        /// <summary>
+        /// Navigates to the provided view model of type
+        /// </summary>
+        /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
+        public static Task NavigateToViewModelAsync<TViewModel>(object parameter, bool animate) 
+            where TViewModel : BaseViewModel
+        {       
+            return NavigateToViewModelAsync(typeof(TViewModel), parameter, animate);
+        }
+
+        /// <summary>
+        /// Navigates to the provided view model of type
+        /// </summary>
+        /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
+        public static Task NavigateToViewModelAsync(Type viewModelType, object parameter)
+        {
+            return NavigateToViewModelAsync(viewModelType, parameter, true);
+        }
+
+        /// <summary>
+        /// Navigates to the provided view model of type
+        /// </summary>
+        /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
+        public static async Task NavigateToViewModelAsync(Type viewModelType, object parameter, bool animate)
         {
             var view = ViewManager.GetViewFromViewModel(viewModelType);
 
@@ -113,7 +154,7 @@ namespace Test.NewSolution.FormsApp.Mvvm
                     await viewWithParameter.InitializeAsync (parameter);
             }
 
-            await _navigationPageStack.Peek().Page.Navigation.PushAsync (view);
+            await _navigationPageStack.Peek().Page.Navigation.PushAsync (view, animate);
         }
 
         /// <summary>
@@ -132,6 +173,16 @@ namespace Test.NewSolution.FormsApp.Mvvm
         #endregion
 
         #region Modal Navigation
+
+        /// <summary>
+        /// Navigates to the provided view model of type
+        /// </summary>
+        /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
+        public static Task<NavigationPage> NavigateModalToViewModelAsync<TViewModel>(object parameter) 
+            where TViewModel : BaseViewModel
+        {       
+            return NavigateModalToViewModelAsync(typeof(TViewModel), null, parameter);
+        }
 
         /// <summary>
         /// Navigates to the provided view model of type
@@ -166,26 +217,26 @@ namespace Test.NewSolution.FormsApp.Mvvm
             _navigationPageStack.Push(new NavigationElement{
                 Page = retVal, DismissedAction = dismissedCallback
             });
-                    
+
             return retVal;
         }
-       
-		/// <summary>
-		/// Navigates to the provided view model of type
-		/// </summary>
-		/// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
-		public static Task<NavigationPage> NavigateModalToViewModelAsync<TViewModel>(Action dismissedCallback) 
-			where TViewModel : BaseViewModel
-		{       
+
+        /// <summary>
+        /// Navigates to the provided view model of type
+        /// </summary>
+        /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
+        public static Task<NavigationPage> NavigateModalToViewModelAsync<TViewModel>(Action dismissedCallback) 
+            where TViewModel : BaseViewModel
+        {       
             return NavigateModalToViewModelAsync<TViewModel>(dismissedCallback, null);
-		}
+        }
 
         /// <summary>
         /// Navigates to the provided view model of type
         /// </summary>
         /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
         public static Task<NavigationPage> NavigateModalToViewModelAsync<TViewModel>() 
-			where TViewModel : BaseViewModel
+            where TViewModel : BaseViewModel
         {       
             return NavigateModalToViewModelAsync<TViewModel>(null);
         }
@@ -214,14 +265,14 @@ namespace Test.NewSolution.FormsApp.Mvvm
         /// <returns>The modal view model async.</returns>
         public static async Task PopModalViewModelAsync()
         {
-		    var poppedPage = await _navigationPageStack.Peek().Page.Navigation.PopModalAsync ();
-			if(poppedPage == _navigationPageStack.Peek().Page)
-			{
-				var tempNavigationElement = _navigationPageStack.Peek ();
-				_navigationPageStack.Pop ();
-				if (tempNavigationElement.DismissedAction != null)
-					tempNavigationElement.DismissedAction ();
-			}
+            var poppedPage = await _navigationPageStack.Peek().Page.Navigation.PopModalAsync ();
+            if(poppedPage == _navigationPageStack.Peek().Page)
+            {
+                var tempNavigationElement = _navigationPageStack.Peek ();
+                _navigationPageStack.Pop ();
+                if (tempNavigationElement.DismissedAction != null)
+                    tempNavigationElement.DismissedAction ();
+            }
         }
 
         #endregion
@@ -230,10 +281,10 @@ namespace Test.NewSolution.FormsApp.Mvvm
     /// <summary>
     /// Navigation Element Helper 
     /// </summary>
-	internal class NavigationElement
-	{
-		public Page Page {get;set;}
-		public Action DismissedAction { get; set; }
-	}
+    internal class NavigationElement
+    {
+        public Page Page {get;set;}
+        public Action DismissedAction { get; set; }
+    }
 }
 
