@@ -142,7 +142,6 @@
     <Compile Include="TinyIoC.cs" />
     <Compile Include="Platform\IoC\ContainerProvider.cs" />
     <Compile Include="Platform\Views\RoundedBorderView.cs" />
-    <Compile Include="Platform\Renderers\FontAwesomeLabelRenderer.cs" />
     <Compile Include="SplashscreenActivity.cs" />
     <Compile Include="Platform\Repositories\DroidConnectionProvider.cs" />
     <Compile Include="Platform\Mvvm\DroidImageProvider.cs" />
@@ -160,6 +159,7 @@
     <Folder Include="Assets\" />
     <Folder Include="Assets\Fonts\" />
     <Folder Include="Resources\values-v21\" />
+    <Folder Include="Platform\Renderers\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />

@@ -37,7 +37,6 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Providers\ViewModelStorageProvider.cs" />
     <Compile Include="Views\BaseContentsView.cs" />
-    <Compile Include="Controls\RoundedBorderControl.cs" />
     <Compile Include="Mvvm\ViewManager.cs" />
     <Compile Include="Mvvm\NavigationManager.cs" />
     <Compile Include="Mvvm\IView.cs" />
@@ -49,7 +48,6 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\MainView.cs" />
     <Compile Include="Mvvm\IImageProvider.cs" />
-    <Compile Include="Controls\FontAwesomeLabel.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="AppBuilder.cs" />
     <Compile Include="Mvvm\ProgressHelper.cs" />
