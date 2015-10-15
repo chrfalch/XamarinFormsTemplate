@@ -53,7 +53,7 @@ namespace Test.NewSolution.FormsApp
             Container.RegisterSingleton<ILoggingService, LoggingService>();
 
             // Repositories
-            Container.RegisterSingleton<IRepositoryAsync<PreferenceModel>, RepositoryAsync<PreferenceModel>>();
+            Container.RegisterSingleton<IRepository<PreferenceModel>, Repository<PreferenceModel>>();
         }
 
         /// <summary>

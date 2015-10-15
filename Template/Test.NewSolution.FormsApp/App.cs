@@ -27,8 +27,7 @@ namespace Test.NewSolution.FormsApp
         public App ()
 		{
             // The root page of your application
-            MainPage = new NavigationPage(Container.Resolve<MasterView>());
-            NavigationManager.SetMainPage(MainPage);
+            MainPage = Container.Resolve<MasterView>();
 		}
 
         #region App Lifecycle Callbacks
