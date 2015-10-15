@@ -6,7 +6,7 @@ using Test.NewSolution.Contracts.Services;
 using Test.NewSolution.Data.Services;
 using Test.NewSolution.Contracts.Models;
 using Test.NewSolution.Data.Repositories;
-using Test.NewSolution.Repositories;
+using Test.NewSolution.Contracts.Repositories;
 using System.Threading.Tasks;
 using Test.NewSolution.FormsApp.Views;
 using Test.NewSolution.FormsApp.Providers;

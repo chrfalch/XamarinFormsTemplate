@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Linq.Expressions;
 using SQLite.Net.Attributes;
-using Test.NewSolution.Repositories;
+using Test.NewSolution.Contracts.Repositories;
 using Test.NewSolution.Contracts.Models;
 
 namespace Test.NewSolution.Data.Tests.Mocks
 {
-    public class RepositoryMock<TModel>: IRepository<TModel>
+    public class RepositoryMock<TModel>: IRepositoryAsync<TModel>
 		where TModel:RepositoryModel, new()
 	{
 		private readonly Dictionary<string, object> _dict = 

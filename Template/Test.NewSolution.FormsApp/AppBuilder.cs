@@ -1,7 +1,7 @@
 ﻿using System;
 using Test.NewSolution.FormsApp.IoC;
 using Test.NewSolution.Contracts.Services;
-using Test.NewSolution.Repositories;
+using Test.NewSolution.Contracts.Repositories;
 using Test.NewSolution.Contracts.Models;
 using Test.NewSolution.Data.Repositories;
 using Test.NewSolution.Data.Services;
@@ -53,7 +53,7 @@ namespace Test.NewSolution.FormsApp
             Container.RegisterSingleton<ILoggingService, LoggingService>();
 
             // Repositories
-            Container.RegisterSingleton<IRepository<PreferenceModel>, Repository<PreferenceModel>>();
+            Container.RegisterSingleton<IRepositoryAsync<PreferenceModel>, RepositoryAsync<PreferenceModel>>();
         }
 
         /// <summary>

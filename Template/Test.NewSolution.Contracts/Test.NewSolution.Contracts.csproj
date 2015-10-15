@@ -31,7 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Services\IPreferenceService.cs" />
     <Compile Include="Services\IService.cs" />
     <Compile Include="Models\PreferenceModel.cs" />
@@ -39,6 +38,8 @@
     <Compile Include="Services\ILoggingService.cs" />
     <Compile Include="Services\ILoggingProvider.cs" />
     <Compile Include="Repositories\IConnectionProvider.cs" />
+    <Compile Include="Repositories\IRepositoryAsync.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

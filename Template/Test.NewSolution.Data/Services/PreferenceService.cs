@@ -1,6 +1,6 @@
 ﻿using System;
 using Test.NewSolution.Contracts.Services;
-using Test.NewSolution.Repositories;
+using Test.NewSolution.Contracts.Repositories;
 using Test.NewSolution.Contracts.Models;
 using System.Threading.Tasks;
 using Test.NewSolution.Helpers;
@@ -28,11 +28,6 @@ namespace Test.NewSolution.Data.Services
         private int _updateCount = 0;
 
         /// <summary>
-        /// The initialization task
-        /// </summary>
-        private Task Initialization;
-
-        /// <summary>
         /// The logging service.
         /// </summary>
         private ILoggingService _loggingService;
@@ -57,7 +52,10 @@ namespace Test.NewSolution.Data.Services
         {
             _preferenceModelRepository = preferenceModelRepository;
             _loggingService = loggingService;
-            Initialization = InitializeAsync();
+
+            // Fill Cache
+            foreach (var model in _preferenceModelRepository.GetItems())
+                _cache.Add(model.Id, model);              
         }
 
         #region IPreferenceService implementation
@@ -70,47 +68,38 @@ namespace Test.NewSolution.Data.Services
         /// Persists the data to disk
         /// </summary>
         /// <returns>The async.</returns>
-        public async Task PersistAsync()
+        public Task PersistAsync()
         {       
             if (_inPersist)
-                return;
+                return Task.FromResult(false);
 
             _inPersist = true;
+            var tcs = new TaskCompletionSource<bool>();
 
-            await Initialization;
+            Task.Run(() => {
 
-            try
-            {
-                var cacheCopy = new Dictionary<string, PreferenceModel>();
-
-                lock (_cache)
+                try
                 {
-                    foreach (var element in _cache)
-                        cacheCopy.Add(element.Key, new PreferenceModel { Id = element.Value.Id, ValueAsJSON = element.Value.ValueAsJSON});
+                    var cacheCopy = new Dictionary<string, PreferenceModel>();
+
+                    lock (_cache)
+                    {
+                        foreach (var element in _cache)
+                            cacheCopy.Add(element.Key, new PreferenceModel { Id = element.Value.Id, ValueAsJSON = element.Value.ValueAsJSON});
+                    }
+
+                    foreach (var keyValue in cacheCopy)
+                        _preferenceModelRepository.Update(keyValue.Value);
+                }
+                finally
+                {
+                    _inPersist = false;
+                    tcs.SetResult(true);
                 }
 
-                foreach (var keyValue in cacheCopy)
-                    await _preferenceModelRepository.UpdateAsync(keyValue.Value);                
-            }
-            finally
-            {
-                _inPersist = false;
-            }
-        }
+            });
 
-        #endregion
-
-        #region IService implementation
-
-        /// <summary>
-        /// Initializes the async.
-        /// </summary>
-        /// <returns>The async.</returns>
-        public async Task InitializeAsync()
-        {
-            // Fill Cache
-            foreach (var model in await _preferenceModelRepository.GetItemsAsync())
-                _cache.Add(model.Id, model);              
+            return tcs.Task;
         }
 
         #endregion
@@ -125,8 +114,6 @@ namespace Test.NewSolution.Data.Services
         /// <typeparam name="T">The 1st type parameter.</typeparam>
         private void SetObjectForKey<T>(Expression<Func<object>> property, T value)
         {
-            Task.Run(async () => await Initialization).Wait();
-
             var key = PropertyNameHelper.GetPropertyName<PreferenceService>(property);
 
             var json = JsonConvert.SerializeObject(value);
@@ -140,7 +127,7 @@ namespace Test.NewSolution.Data.Services
                 _cache.Add(key, item);
 
                 // Add to the repo                
-                Task.Run(async () => await _preferenceModelRepository.InsertAsync(item)).Wait();
+                _preferenceModelRepository.Insert(item);
 
             }
             else
@@ -172,8 +159,6 @@ namespace Test.NewSolution.Data.Services
         /// <typeparam name="T">The 1st type parameter.</typeparam>
         private T GetObjectForKey<T>(Expression<Func<object>> property, T defaultValue)
         {
-            Task.Run(async () => await Initialization).Wait();
-
             var key = PropertyNameHelper.GetPropertyName<PreferenceService>(property);
 
             // DO NOT LOG HERE!! Logging will cause the log system to never stop since each log causes
