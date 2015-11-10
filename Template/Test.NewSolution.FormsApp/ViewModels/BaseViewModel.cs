@@ -16,6 +16,7 @@ using System.Linq.Expressions;
 using Test.NewSolution.Classes;
 using Test.NewSolution.FormsApp.Providers;
 using Test.NewSolution.Helpers;
+using System.Runtime.CompilerServices;
 
 namespace Test.NewSolution.FormsApp.ViewModels
 {
@@ -216,10 +217,11 @@ namespace Test.NewSolution.FormsApp.ViewModels
         /// <returns>The command.</returns>
         /// <param name="action">Action.</param>
         /// <param name="state">State.</param>
-        protected Command GetOrCreateCommand(Expression<Func<object>> commandProperty,
-            Command command)
+        protected Command GetOrCreateCommand(Command command, [CallerMemberName] string commandName = null)
         {
-            var commandName = PropertyNameHelper.GetPropertyName<BaseViewModel> (commandProperty);
+            if (string.IsNullOrEmpty(commandName))
+                throw new ArgumentException("commandname");
+
             if (!_commands.ContainsKey (commandName))
                 _commands.Add (commandName, command);
 
@@ -232,10 +234,11 @@ namespace Test.NewSolution.FormsApp.ViewModels
         /// <returns>The command.</returns>
         /// <param name="action">Action.</param>
         /// <param name="state">State.</param>
-        protected Command<T> GetOrCreateCommand<T>(Expression<Func<object>> commandProperty,
-            Command<T> command)
+        protected Command<T> GetOrCreateCommand<T>(Command command, [CallerMemberName] string commandName = null)
         {
-            var commandName = PropertyNameHelper.GetPropertyName<BaseViewModel> (commandProperty);
+            if (string.IsNullOrEmpty(commandName))
+                throw new ArgumentException("commandname");
+
             if (!_commands.ContainsKey (commandName))
                 _commands.Add (commandName, command);
 

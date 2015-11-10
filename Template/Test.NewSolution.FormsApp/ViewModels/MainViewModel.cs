@@ -37,7 +37,7 @@ namespace Test.NewSolution.FormsApp.ViewModels
         public Command ShowMenuCommand
         {
             get{
-                return GetOrCreateCommand(() => ShowMenuCommand, new Command(async (obj) => {
+                return GetOrCreateCommand(new Command(async (obj) => {
                     IsBusy = true;
                     await Task.Delay(1500);
                     NavigationManager.ToggleDrawer();

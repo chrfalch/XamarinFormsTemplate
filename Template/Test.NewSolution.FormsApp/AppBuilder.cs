@@ -8,6 +8,8 @@ using Test.NewSolution.Data.Services;
 using Test.NewSolution.FormsApp.Mvvm;
 using Test.NewSolution.FormsApp.ViewModels;
 using Test.NewSolution.FormsApp.Views;
+using Test.NewSolution.Contracts.Clients;
+using Test.NewSolution.Data.Clients;
 
 namespace Test.NewSolution.FormsApp
 {
@@ -51,6 +53,9 @@ namespace Test.NewSolution.FormsApp
             // Services
             Container.RegisterSingleton<IPreferenceService, PreferenceService>();
             Container.RegisterSingleton<ILoggingService, LoggingService>();
+
+            // Clients
+            Container.Register<IApiClientProvider, HttpApiClientProvider>();
 
             // Repositories
             Container.RegisterSingleton<IRepository<PreferenceModel>, Repository<PreferenceModel>>();
