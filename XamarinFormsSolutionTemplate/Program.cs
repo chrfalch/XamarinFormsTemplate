@@ -8,7 +8,7 @@ namespace XamarinFormsSolutionTemplate
 		static readonly string TemplateName = "Test.NewSolution";
 		static readonly string TemplatePath = "/Users/christianfalch/Dropbox/Projects/Islandssoftware/Dev/xamarin/XamarinFormsSolutionTemplate/Template";
 
-		static string NewName = "Sin4U";
+		static string NewName = "MyNewThing";
 		static string OutputPath = "/Users/christianfalch/Dropbox/Projects/Islandssoftware/Dev/xamarin/XamarinFormsSolutionTemplate/Results";
 
 		public static void Main (string[] args)
