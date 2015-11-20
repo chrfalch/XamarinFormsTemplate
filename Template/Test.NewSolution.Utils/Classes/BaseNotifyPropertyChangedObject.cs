@@ -29,24 +29,32 @@ namespace Test.NewSolution.Classes
 
 		#endregion
 
-		#region Protected Members
+        #region Protected Members
 
-		/// <summary>
-		/// Calls the notify property changed event if it is attached. By using some
-		/// Expression/Func magic we get compile time type checking on our property
-		/// names by using this method instead of calling the event with a string in code.
-		/// </summary>
-		/// <param name="property">Property.</param>
-		protected virtual void RaisePropertyChangedEvent(Expression<Func<object>> property)
-		{
-			if (PropertyChanged == null)
-				return;
+        /// <summary>
+        /// Calls the notify property changed event if it is attached. By using some
+        /// Expression/Func magic we get compile time type checking on our property
+        /// names by using this method instead of calling the event with a string in code.
+        /// </summary>
+        /// <param name="property">Property.</param>
+        protected virtual void RaisePropertyChangedEvent(Expression<Func<object>> property)
+        {
+            RaisePropertyChangedEvent(PropertyNameHelper.GetPropertyName<BaseNotifyPropertyChangedObject>(property));
+        }
 
-			PropertyChanged(this, new PropertyChangedEventArgs(
-				PropertyNameHelper.GetPropertyName<BaseNotifyPropertyChangedObject>(property)));
-		}
+        /// <summary>
+        /// Raises the property changed event.
+        /// </summary>
+        /// <param name="propertyName">Property name.</param>
+        protected virtual void RaisePropertyChangedEvent (string propertyName)
+        {
+            if (PropertyChanged == null)
+                return;
 
-		#endregion
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
 	}
 }
 

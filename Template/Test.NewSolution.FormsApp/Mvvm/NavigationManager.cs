@@ -145,6 +145,9 @@ namespace Test.NewSolution.FormsApp.Mvvm
         /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
         public static async Task NavigateToViewModelAsync(Type viewModelType, object parameter, bool animate)
         {
+            if (_masterDetailPage != null)
+                _masterDetailPage.IsPresented = false;
+
             var view = ViewManager.GetViewFromViewModel(viewModelType);
 
             if (parameter != null)
@@ -189,7 +192,7 @@ namespace Test.NewSolution.FormsApp.Mvvm
         /// </summary>
         /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
         public static Task<NavigationPage> NavigateModalToViewModelAsync<TViewModel>(
-            Action dismissedCallback, object parameter) 
+            Action<bool> dismissedCallback, object parameter) 
             where TViewModel : BaseViewModel
         {       
             return NavigateModalToViewModelAsync(typeof(TViewModel), dismissedCallback, parameter);
@@ -200,8 +203,11 @@ namespace Test.NewSolution.FormsApp.Mvvm
         /// </summary>
         /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
         public static async Task<NavigationPage> NavigateModalToViewModelAsync(
-            Type viewModelType, Action dismissedCallback, object parameter)             
+            Type viewModelType, Action<bool> dismissedCallback, object parameter)
         {       
+            if (_masterDetailPage != null)
+                _masterDetailPage.IsPresented = false;
+
             var view = ViewManager.GetViewFromViewModel(viewModelType);
             var retVal = new NavigationPage (view);
 
@@ -225,7 +231,7 @@ namespace Test.NewSolution.FormsApp.Mvvm
         /// Navigates to the provided view model of type
         /// </summary>
         /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
-        public static Task<NavigationPage> NavigateModalToViewModelAsync<TViewModel>(Action dismissedCallback) 
+        public static Task<NavigationPage> NavigateModalToViewModelAsync<TViewModel>(Action<bool> dismissedCallback) 
             where TViewModel : BaseViewModel
         {       
             return NavigateModalToViewModelAsync<TViewModel>(dismissedCallback, null);
@@ -245,7 +251,7 @@ namespace Test.NewSolution.FormsApp.Mvvm
         /// Navigates to the provided view model of type
         /// </summary>
         /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
-        public static Task<NavigationPage> NavigateModalToViewModelAsync(Type viewModelType, Action dismissedCallback)             
+        public static Task<NavigationPage> NavigateModalToViewModelAsync(Type viewModelType, Action<bool> dismissedCallback)             
         {       
             return NavigateModalToViewModelAsync(viewModelType, dismissedCallback, null);
         }
@@ -263,7 +269,7 @@ namespace Test.NewSolution.FormsApp.Mvvm
         /// Pops the active modal view 
         /// </summary>
         /// <returns>The modal view model async.</returns>
-        public static async Task PopModalViewModelAsync()
+        public static async Task PopModalViewModelAsync(bool success)
         {
             var poppedPage = await _navigationPageStack.Peek().Page.Navigation.PopModalAsync ();
             if(poppedPage == _navigationPageStack.Peek().Page)
@@ -271,7 +277,7 @@ namespace Test.NewSolution.FormsApp.Mvvm
                 var tempNavigationElement = _navigationPageStack.Peek ();
                 _navigationPageStack.Pop ();
                 if (tempNavigationElement.DismissedAction != null)
-                    tempNavigationElement.DismissedAction ();
+                    tempNavigationElement.DismissedAction (success);
             }
         }
 
@@ -284,7 +290,7 @@ namespace Test.NewSolution.FormsApp.Mvvm
     internal class NavigationElement
     {
         public Page Page {get;set;}
-        public Action DismissedAction { get; set; }
+        public Action<bool> DismissedAction { get; set; }
     }
 }
 

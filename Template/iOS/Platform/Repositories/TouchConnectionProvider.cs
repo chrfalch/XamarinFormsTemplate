@@ -33,7 +33,7 @@ namespace Test.NewSolution.iOS.Platform.Repositories
         {
             if (_connection != null)
                 return _connection;
-
+            
             var folder = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
             var filename = Path.Combine (folder, "storage.db");
             _connection = new SQLiteConnectionWithLock (

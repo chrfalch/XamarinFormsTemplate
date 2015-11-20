@@ -13,23 +13,9 @@ namespace Test.NewSolution.FormsApp.ViewModels
         /// </summary>
         public MenuViewModel()
         {
+            Title = Strings.TitleMenu;
         }
-
-        #region Properties
-
-        /// <summary>
-        /// Returns the view title
-        /// </summary>
-        /// <value>The view title.</value>
-        public override string Title
-        {
-            get
-            {
-                return Strings.TitleMenu;
-            }
-        }
-
-        #endregion
+            
     }
 }
 

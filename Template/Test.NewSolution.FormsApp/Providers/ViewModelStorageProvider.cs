@@ -35,6 +35,9 @@ namespace Test.NewSolution.FormsApp.Providers
         /// <typeparam name="T">The 1st type parameter.</typeparam>
         public T GetObjectForKey<T>(string key, T defaultValue)
         {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentException("key");
+
             if (!_storage.ContainsKey (key)) {
                 if (defaultValue == null)
                     return defaultValue;

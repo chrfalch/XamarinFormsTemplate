@@ -17,21 +17,17 @@ using Test.NewSolution.Classes;
 using Test.NewSolution.FormsApp.Providers;
 using Test.NewSolution.Helpers;
 using System.Runtime.CompilerServices;
+using Test.NewSolution.FormsApp.Attributes;
+using System.Reflection;
 
 namespace Test.NewSolution.FormsApp.ViewModels
 {
-	/// <summary>
-	/// Base view model.
-	/// </summary>
-    public abstract class BaseViewModel : BaseNotifyPropertyChangedObject
+    /// <summary>
+    /// Base view model.
+    /// </summary>
+    public abstract class BaseViewModel : BaseModel
     {
         #region Private Members
-
-        /// <summary>
-        /// The view model storage.
-        /// </summary>
-        private readonly ViewModelStorageProvider _viewModelStorage = 
-            new ViewModelStorageProvider();
 
         /// <summary>
         /// Command dependencies - key == property, value = list of commands
@@ -40,20 +36,9 @@ namespace Test.NewSolution.FormsApp.ViewModels
             new Dictionary<string, List<Command>>();
 
         /// <summary>
-        /// Command dependencies - key == property, value = list of property names
-        /// </summary>
-        private readonly Dictionary<string, List<Expression<Func<object>>>> _propertyDependencies = 
-            new Dictionary<string, List<Expression<Func<object>>>>();
-
-        /// <summary>
         /// Command cache
         /// </summary>
         private readonly Dictionary<string, Command> _commands = new Dictionary<string, Command> ();
-
-        /// <summary>
-        /// The notify change for same values.
-        /// </summary>
-        private readonly List<string> _notifyChangeForSameValues = new List<string>();
 
         /// <summary>
         /// The property change listeners.
@@ -70,9 +55,8 @@ namespace Test.NewSolution.FormsApp.ViewModels
         /// <param name="viewModelStorage">View model storage.</param>
         public BaseViewModel()
         {
-            // Property dependencies
-            AddPropertyDependency(() => IsBusyText, () => IsBusyTextVisible);
-
+            // Title
+            Title = this.GetType().Name;
         }
 
         #endregion
@@ -80,150 +64,24 @@ namespace Test.NewSolution.FormsApp.ViewModels
         #region Protected Members
 
         /// <summary>
-        /// Sets a value in viewmodel storage and raises property changed if value has changed
-        /// </summary>
-        /// <param name="name">Name.</param>
-        /// <param name="value">Value.</param>
-        /// <typeparam name="TValueType">The 1st type parameter.</typeparam>
-        protected bool SetValue<TValueType>(Expression<Func<object>> property, TValueType value) 
-        {
-            var existingValue = GetValue<TValueType>(property);
-            var propertyName = PropertyNameHelper.GetPropertyName<BaseViewModel>(property);
-
-            // Check for equality
-            if (!_notifyChangeForSameValues.Contains(propertyName) && 
-                EqualityComparer<TValueType>.Default.Equals (existingValue, value))
-                return false;
-
-            _viewModelStorage.SetObjectForKey<TValueType> (propertyName, value);
-
-            RaisePropertyChangedEvent (property);
-
-            return true;
-        }
-
-        /// <summary>
-        /// Calls the notify property changed event if it is attached. By using some
-        /// Expression/Func magic we get compile time type checking on our property
-        /// names by using this method instead of calling the event with a string in code.
-        /// </summary>
-        /// <param name="property">Property.</param>
-        protected override void RaisePropertyChangedEvent (Expression<Func<object>> property)
-        {
-            base.RaisePropertyChangedEvent (property);
-
-            var propertyName = PropertyNameHelper.GetPropertyName<BaseViewModel>(property);
-
-            CheckDependantPropertiesAndCommands (propertyName);
-        }
-
-        /// <summary>
-        /// Checks the dependant properties and commands.
-        /// </summary>
-        protected void CheckDependantPropertiesAndCommands (string propertyName)
-        {
-            // Dependent properties?
-            if (_propertyDependencies.ContainsKey (propertyName)) {
-                foreach (var dependentProperty in _propertyDependencies[propertyName])
-                    RaisePropertyChangedEvent (dependentProperty);
-            }
-
-            // Dependent commands
-            if (_commandDependencies.ContainsKey (propertyName)) {
-                foreach (var dependentCommand in _commandDependencies[propertyName])
-                    RaiseCommandStateChangedEvent (dependentCommand);
-            }
-        }
-
-        /// <summary>
-        /// Returns a value from the viewmodel storage
-        /// </summary>
-        /// <returns>The value.</returns>
-        /// <param name="name">Name.</param>
-        /// <typeparam name="TValueType">The 1st type parameter.</typeparam>
-        protected TValueType GetValue<TValueType>(Expression<Func<object>> property) 
-        {
-            return GetValue<TValueType> (property, () => default(TValueType));
-        }
-
-        /// Returns a value from the viewmodel storage
-        /// </summary>
-        /// <returns>The value.</returns>
-        /// <param name="name">Name.</param>
-        /// <typeparam name="TValueType">The 1st type parameter.</typeparam>
-        protected TValueType GetValue<TValueType>(Expression<Func<object>> property, Func<TValueType> defaultValueFunc) 
-        {
-            var propertyName = PropertyNameHelper.GetPropertyName<BaseViewModel> (property);
-            return _viewModelStorage.GetObjectForKey<TValueType> (propertyName, defaultValueFunc());
-        }
-
-        /// <summary>
-        /// Adds a dependency between a command and a property. Whenever the property changes, the command's 
-        /// state will be updated
-        /// </summary>
-        /// <param name="property">Source Property.</param>
-        /// <param name="command">Target Command.</param>
-        protected void AddCommandDependency(Expression<Func<object>> property, Command command)
-        {
-            var propertyName = PropertyNameHelper.GetPropertyName <BaseViewModel>(property);
-            if (!_commandDependencies.ContainsKey (propertyName))
-                _commandDependencies.Add (propertyName, new List<Command> ());
-
-            var list = _commandDependencies [propertyName];
-            list.Add (command);
-        }
-
-        /// <summary>
-        /// Adds a dependency between a property and another property. Whenever the property changes, the command's 
-        /// state will be updated
-        /// </summary>
-        /// <param name="property">Source property.</param>
-        /// <param name="dependantProperty">Target property.</param>
-        protected void AddPropertyDependency(Expression<Func<object>> property, 
-            Expression<Func<object>> dependantProperty)
-        {
-            var propertyName = PropertyNameHelper.GetPropertyName <BaseViewModel>(property);
-            if (!_propertyDependencies.ContainsKey (propertyName))
-                _propertyDependencies.Add (propertyName, new List<Expression<Func<object>>> ());
-
-            var list = _propertyDependencies [propertyName];
-            list.Add (dependantProperty);
-        }
-
-        /// <summary>
-        /// Adds the raise notify changed for property when value is the same.
-        /// </summary>
-        /// <param name="property">Property.</param>
-        /// <param name="dependantProperty">Dependant property.</param>
-        /// <typeparam name="TViewModel">The 1st type parameter.</typeparam>
-        protected void AddRaiseNotifyChangedForPropertyWhenValueIsTheSame(Expression<Func<object>> property)
-        {
-            var propertyName = PropertyNameHelper.GetPropertyName <BaseViewModel>(property);
-            _notifyChangeForSameValues.Add(propertyName);
-        }
-
-        /// <summary>
-        /// Raises the command state changed event.
-        /// </summary>
-        /// <param name="command">Command.</param>
-        protected void RaiseCommandStateChangedEvent(Command command)
-        {
-            command.ChangeCanExecute ();
-        }
-
-        /// <summary>
         /// Creates or returns the 
         /// </summary>
         /// <returns>The command.</returns>
         /// <param name="action">Action.</param>
         /// <param name="state">State.</param>
-        protected Command GetOrCreateCommand(Command command, [CallerMemberName] string commandName = null)
+        protected Command GetOrCreateCommand(Action commandAction, Func<bool> canExecuteFunc = null, 
+            [CallerMemberName] string commandName = null)
         {
             if (string.IsNullOrEmpty(commandName))
                 throw new ArgumentException("commandname");
 
-            if (!_commands.ContainsKey (commandName))
-                _commands.Add (commandName, command);
+            if (!_commands.ContainsKey(commandName))
+            {
+                if(canExecuteFunc == null)
+                    _commands.Add(commandName, new Command(commandAction));
+                else
+                    _commands.Add(commandName, new Command(commandAction, canExecuteFunc));
+            }
 
             return _commands [commandName];
         }
@@ -234,13 +92,42 @@ namespace Test.NewSolution.FormsApp.ViewModels
         /// <returns>The command.</returns>
         /// <param name="action">Action.</param>
         /// <param name="state">State.</param>
-        protected Command<T> GetOrCreateCommand<T>(Command command, [CallerMemberName] string commandName = null)
+        protected Command GetOrCreateCommand(Action<object> commandAction, Func<object, bool> canExecuteFunc = null, 
+            [CallerMemberName] string commandName = null)
         {
             if (string.IsNullOrEmpty(commandName))
                 throw new ArgumentException("commandname");
 
             if (!_commands.ContainsKey (commandName))
-                _commands.Add (commandName, command);
+            {
+                if(canExecuteFunc == null)
+                    _commands.Add(commandName, new Command(commandAction));
+                else
+                    _commands.Add(commandName, new Command(commandAction, canExecuteFunc));
+            }
+
+            return _commands [commandName];
+        }
+
+        /// <summary>
+        /// Creates or returns the 
+        /// </summary>
+        /// <returns>The command.</returns>
+        /// <param name="action">Action.</param>
+        /// <param name="state">State.</param>
+        protected Command<T> GetOrCreateCommand<T>(Action<T> commandAction, Func<T, bool> canExecuteFunc = null, 
+            [CallerMemberName] string commandName = null)
+        {
+            if (string.IsNullOrEmpty(commandName))
+                throw new ArgumentException("commandname");
+
+            if (!_commands.ContainsKey (commandName))
+            {
+                if(canExecuteFunc == null)
+                    _commands.Add(commandName, new Command<T>(commandAction));
+                else
+                    _commands.Add(commandName, new Command<T>(commandAction, canExecuteFunc));
+            }
 
             return _commands [commandName] as Command<T>;
         }
@@ -255,6 +142,83 @@ namespace Test.NewSolution.FormsApp.ViewModels
             var changeListener = new PropertyChangeListener();
             changeListener.Listen<TObject>(property, obj, callback);
             _propertyChangeListeners.Add(changeListener);
+        }
+
+        /// <summary>
+        /// Checks the dependant properties and commands.
+        /// </summary>
+        protected override void CheckDependantProperties (string propertyName)
+        {
+            base.CheckDependantProperties(propertyName);
+
+            // Dependent commands
+            if (_commandDependencies.ContainsKey (propertyName)) {
+                foreach (var dependentCommand in _commandDependencies[propertyName])
+                    RaiseCommandStateChangedEvent (dependentCommand);
+            }
+        }
+
+        #endregion
+
+        #region Private Members
+
+        /// <summary>
+        /// Adds a dependency between a command and a property. Whenever the property changes, the command's 
+        /// state will be updated
+        /// </summary>
+        /// <param name="property">Source Property.</param>
+        /// <param name="command">Target Command.</param>
+        private void AddCommandDependency(Expression<Func<object>> property, Command command)
+        {
+            var propertyName = PropertyNameHelper.GetPropertyName <BaseViewModel>(property);
+            if (!_commandDependencies.ContainsKey (propertyName))
+                _commandDependencies.Add (propertyName, new List<Command> ());
+
+            var list = _commandDependencies [propertyName];
+            list.Add (command);
+        }
+
+        /// <summary>
+        /// Adds a dependency between a command and a property. Whenever the property changes, the command's 
+        /// state will be updated
+        /// </summary>
+        /// <param name="property">Source Property.</param>
+        /// <param name="command">Target Command.</param>
+        private void AddCommandDependency(string propertyName, Command command)
+        {
+            if (!_commandDependencies.ContainsKey (propertyName))
+                _commandDependencies.Add (propertyName, new List<Command> ());
+
+            var list = _commandDependencies [propertyName];
+            list.Add (command);
+        }
+
+        /// <summary>
+        /// Raises the command state changed event.
+        /// </summary>
+        /// <param name="command">Command.</param>
+        private void RaiseCommandStateChangedEvent(Command command)
+        {
+            command.ChangeCanExecute ();
+        }
+
+        /// <summary>
+        /// Handles the property dependency.
+        /// </summary>
+        /// <param name="dependantPropertyInfo">Dependant property info.</param>
+        /// <returns><c>true</c>, if property dependency was handled, <c>false</c> otherwise.</returns>
+        protected override bool HandlePropertyDependency(PropertyInfo dependantProperty, string sourcePropertyName)
+        {
+            // check command or property
+            if (dependantProperty.PropertyType == typeof(Command))
+            {   
+                // Add a dependency between command and property
+                AddCommandDependency(sourcePropertyName, dependantProperty.GetValue(this) as Command);
+
+                return true;
+            }
+
+            return base.HandlePropertyDependency(dependantProperty, sourcePropertyName);
         }
 
         #endregion
@@ -284,10 +248,10 @@ namespace Test.NewSolution.FormsApp.ViewModels
         /// <summary>
         /// Override to implement logic when the view has been set up on screen
         /// </summary>
-        public async Task OnAppearingAsync()
+        public virtual async Task OnAppearingAsync()
         {
             // Call initialize
-            await InitializeAsync ();
+            await InitializeAsync ();  
 
             IsOnAppearingCalled = true;
         }
@@ -305,10 +269,14 @@ namespace Test.NewSolution.FormsApp.ViewModels
         #region Properties
 
         /// <summary>
-        /// Returns the view title
+        /// Gets or sets the title.
         /// </summary>
-        /// <value>The view title.</value>
-        public virtual string Title { get { return this.GetType().Name; } }
+        /// <value>The title.</value>
+        public string Title 
+        {
+            get { return GetValue<string>(); }
+            set { SetValue<string>(value); }
+        }
 
         /// <summary>
         /// Flag that is set when OnAppearing was called.
@@ -316,8 +284,8 @@ namespace Test.NewSolution.FormsApp.ViewModels
         /// <value><c>true</c> if this instance is on appearing called; otherwise, <c>false</c>.</value>
         public bool IsOnAppearingCalled 
         {
-            get { return GetValue<bool>(() => IsOnAppearingCalled); }
-            set { SetValue<bool>(() => IsOnAppearingCalled, value); }
+            get { return GetValue<bool>(); }
+            set { SetValue<bool>(value); }
         }
 
         /// <summary>
@@ -331,8 +299,8 @@ namespace Test.NewSolution.FormsApp.ViewModels
         /// </summary>
         /// <value><c>true</c> if this instance is busy; otherwise, <c>false</c>.</value>
         public bool IsBusy { 
-            get{ return GetValue(() => IsBusy, () => false); }
-            set{ SetValue(() => IsBusy, value); }
+            get{ return GetValue(() => false); }
+            set{ SetValue(value); }
         }
 
         /// <summary>
@@ -341,8 +309,8 @@ namespace Test.NewSolution.FormsApp.ViewModels
         /// <value><c>true</c> if this instance is busy; otherwise, <c>false</c>.</value>
         public string IsBusyText 
         { 
-            get{ return GetValue<string>(() => IsBusyText); }
-            set{ SetValue<string> (() => IsBusyText, value); }
+            get{ return GetValue<string>(); }
+            set{ SetValue<string> (value); }
         }
 
         /// <summary>
@@ -351,15 +319,17 @@ namespace Test.NewSolution.FormsApp.ViewModels
         /// <value><c>true</c> if this instance is busy; otherwise, <c>false</c>.</value>
         public string IsBusySubTitle 
         { 
-            get{ return GetValue<string>(() => IsBusySubTitle); }
-            set{ SetValue<string> (() => IsBusySubTitle, value); }
+            get{ return GetValue<string>(); }
+            set{ SetValue<string> (value); }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is busy.
         /// </summary>
         /// <value><c>true</c> if this instance is busy; otherwise, <c>false</c>.</value>
-        public bool IsBusyTextVisible { 
+        [DependsOn(nameof(IsBusyText))]
+        public bool IsBusyTextVisible 
+        { 
             get { return !String.IsNullOrEmpty (IsBusyText); }
         }
 

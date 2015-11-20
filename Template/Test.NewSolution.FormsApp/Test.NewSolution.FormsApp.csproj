@@ -58,9 +58,12 @@
     <Compile Include="Extensions\BindingExtensions.cs" />
     <Compile Include="Controls\FullWidthHorizontalStackLayout.cs" />
     <Compile Include="Controls\VerticalStackLayoutInScrollView.cs" />
+    <Compile Include="Attributes\DependsOnAttribute.cs" />
+    <Compile Include="ViewModels\BaseModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.5.1.6471\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.5.1.6471\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <ItemGroup>
     <ProjectReference Include="..\Test.NewSolution.Contracts\Test.NewSolution.Contracts.csproj">
       <Project>{AE6A6C63-9649-4E08-B35D-3F2B8CE9D620}</Project>
@@ -88,6 +91,7 @@
     <Folder Include="Mvvm\" />
     <Folder Include="Extensions\" />
     <Folder Include="Themes\" />
+    <Folder Include="Attributes\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="NGraphics">

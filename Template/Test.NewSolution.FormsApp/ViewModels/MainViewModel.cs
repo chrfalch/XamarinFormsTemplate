@@ -16,20 +16,9 @@ namespace Test.NewSolution.FormsApp.ViewModels
         /// </summary>
         public MainViewModel()
         {
+            Title = Strings.AppName;
         }
-
-        /// <summary>
-        /// Returns the view title
-        /// </summary>
-        /// <value>The view title.</value>
-        public override string Title
-        {
-            get
-            {
-                return Strings.AppName;
-            }
-        }
-
+            
         /// <summary>
         /// Gets the show menu command.
         /// </summary>
@@ -37,12 +26,12 @@ namespace Test.NewSolution.FormsApp.ViewModels
         public Command ShowMenuCommand
         {
             get{
-                return GetOrCreateCommand(new Command(async (obj) => {
+                return GetOrCreateCommand(async () => {
                     IsBusy = true;
                     await Task.Delay(1500);
                     NavigationManager.ToggleDrawer();
                     IsBusy = false;
-                }));
+                });
             }
         }
     }
