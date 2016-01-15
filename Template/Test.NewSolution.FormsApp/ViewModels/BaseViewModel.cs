@@ -251,7 +251,8 @@ namespace Test.NewSolution.FormsApp.ViewModels
         public virtual async Task OnAppearingAsync()
         {
             // Call initialize
-            await InitializeAsync ();  
+            if(!IsOnAppearingCalled)
+                await InitializeAsync ();  
 
             IsOnAppearingCalled = true;
         }
