@@ -19,13 +19,24 @@ namespace Test.NewSolution.FormsApp
     public class AppBuilder
     {
         /// <summary>
+        /// The initialized.
+        /// </summary>
+        private static bool _initialized = false;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Test.NewSolution.FormsApp.AppBuilder"/> class.
         /// </summary>
         public virtual App Build(IContainerProvider containerProvider)
         {
-            SetupContainer(containerProvider);
-            RegisterViews();
-            SetupPlatform();
+            if (!_initialized)
+            {
+                
+                SetupContainer(containerProvider);
+                RegisterViews();
+                SetupPlatform();
+
+                _initialized = true;
+            }
 
             return new App();
         }
