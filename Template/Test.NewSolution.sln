@@ -5,21 +5,27 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.FormsApp", "Test.NewSolution.FormsApp\Test.NewSolution.FormsApp.csproj", "{39EA0550-B11F-4ABC-B23A-61EB4136C775}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.iOS", "iOS\Test.NewSolution.iOS.csproj", "{43A5D241-4140-41A9-9E4B-713E5467A9F9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.Droid", "Droid\Test.NewSolution.Droid.csproj", "{617C5658-90A2-4828-8609-F5959C66CF9C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.Contracts", "Test.NewSolution.Contracts\Test.NewSolution.Contracts.csproj", "{AE6A6C63-9649-4E08-B35D-3F2B8CE9D620}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.Data", "Test.NewSolution.Data\Test.NewSolution.Data.csproj", "{DA2367DC-20DB-4123-B187-B66A1E9A8E36}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.Data.Tests", "Test.NewSolution.Data.Tests\Test.NewSolution.Data.Tests.csproj", "{7CC0A6B8-C241-4C6C-BA27-53F962F7E6F8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.Localization", "Test.NewSolution.Localization\Test.NewSolution.Localization.csproj", "{79968FF8-9E85-42D1-9917-73B52F022969}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.Wp81", "Wp81\Test.NewSolution.Wp81\Test.NewSolution.Wp81.csproj", "{2FACCE7E-2396-42A4-B57C-7168DEF84CE1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{0422FFDC-0202-41C0-90CD-E9D1C2F44A26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.Droid", "Droid\Test.NewSolution.Droid.csproj", "{617C5658-90A2-4828-8609-F5959C66CF9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.iOS", "iOS\Test.NewSolution.iOS.csproj", "{43A5D241-4140-41A9-9E4B-713E5467A9F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{84FF678C-0075-4D22-8CB6-0561EB284379}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.Contracts", "Test.NewSolution.Contracts\Test.NewSolution.Contracts.csproj", "{AE6A6C63-9649-4E08-B35D-3F2B8CE9D620}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.Utils", "Test.NewSolution.Utils\Test.NewSolution.Utils.csproj", "{C5A54152-DCDF-4ED8-B9F7-7A701EDD73CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.Wp81", "Wp81\Test.NewSolution.Wp81\Test.NewSolution.Wp81.csproj", "{2FACCE7E-2396-42A4-B57C-7168DEF84CE1}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A59A20C6-32DF-41FB-B7B4-9AB008AC2CE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.NewSolution.Data.Tests", "Test.NewSolution.Data.Tests\Test.NewSolution.Data.Tests.csproj", "{7CC0A6B8-C241-4C6C-BA27-53F962F7E6F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -325,6 +331,13 @@ Global
 		{DA2367DC-20DB-4123-B187-B66A1E9A8E36}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{DA2367DC-20DB-4123-B187-B66A1E9A8E36}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{DA2367DC-20DB-4123-B187-B66A1E9A8E36}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{617C5658-90A2-4828-8609-F5959C66CF9C} = {0422FFDC-0202-41C0-90CD-E9D1C2F44A26}
+		{43A5D241-4140-41A9-9E4B-713E5467A9F9} = {0422FFDC-0202-41C0-90CD-E9D1C2F44A26}
+		{AE6A6C63-9649-4E08-B35D-3F2B8CE9D620} = {84FF678C-0075-4D22-8CB6-0561EB284379}
+		{C5A54152-DCDF-4ED8-B9F7-7A701EDD73CB} = {84FF678C-0075-4D22-8CB6-0561EB284379}
+		{7CC0A6B8-C241-4C6C-BA27-53F962F7E6F8} = {A59A20C6-32DF-41FB-B7B4-9AB008AC2CE5}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
