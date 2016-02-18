@@ -2,6 +2,7 @@
 using Test.NewSolution.FormsApp.ViewModels;
 using Xamarin.Forms;
 using Test.NewSolution.Localization;
+using NControl.Mvvm;
 
 namespace Test.NewSolution.FormsApp.Views
 {

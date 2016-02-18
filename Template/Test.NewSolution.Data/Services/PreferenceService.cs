@@ -3,7 +3,6 @@ using Test.NewSolution.Contracts.Services;
 using Test.NewSolution.Contracts.Repositories;
 using Test.NewSolution.Contracts.Models;
 using System.Threading.Tasks;
-using Test.NewSolution.Helpers;
 using System.Linq.Expressions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
