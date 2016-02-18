@@ -79,9 +79,5 @@
       <Project>{AE6A6C63-9649-4E08-B35D-3F2B8CE9D620}</Project>
       <Name>Test.NewSolution.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Test.NewSolution.Utils\Test.NewSolution.Utils.csproj">
-      <Project>{C5A54152-DCDF-4ED8-B9F7-7A701EDD73CB}</Project>
-      <Name>Test.NewSolution.Utils</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

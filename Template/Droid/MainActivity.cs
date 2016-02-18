@@ -8,13 +8,8 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Test.NewSolution.FormsApp;
-using Test.NewSolution.Droid.Platform.IoC;
 using Test.NewSolution.Contracts.Repositories;
 using Test.NewSolution.Droid.Platform.Repositories;
-using Test.NewSolution.Droid.Platform.Mvvm;
-using Test.NewSolution.FormsApp.Mvvm;
-using Test.NewSolution.FormsApp.IoC;
-using Acr.UserDialogs;
 using Xamarin.Forms.Platform.Android;
 
 namespace Test.NewSolution.Droid
@@ -35,11 +30,7 @@ namespace Test.NewSolution.Droid
 			base.OnCreate (bundle);
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
-            NControl.Droid.NControlViewRenderer.Init();
-            NControl.Controls.Droid.NControls.Init();
-            UserDialogs.Init(this);
-
-            LoadApplication(new DroidAppBuilder().Build(new ContainerProvider()));
+            LoadApplication(new App(new DroidAppPlatform(this)));
 		}
 	}
 }

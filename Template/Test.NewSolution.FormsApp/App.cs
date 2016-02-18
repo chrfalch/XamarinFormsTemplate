@@ -1,7 +1,6 @@
 ﻿using System;
 
 using Xamarin.Forms;
-using Test.NewSolution.FormsApp.IoC;
 using Test.NewSolution.Contracts.Services;
 using Test.NewSolution.Data.Services;
 using Test.NewSolution.Contracts.Models;
@@ -9,26 +8,58 @@ using Test.NewSolution.Data.Repositories;
 using Test.NewSolution.Contracts.Repositories;
 using System.Threading.Tasks;
 using Test.NewSolution.FormsApp.Views;
-using Test.NewSolution.FormsApp.Providers;
 using Test.NewSolution.FormsApp.ViewModels;
-using Test.NewSolution.FormsApp.Mvvm;
+using NControl.Mvvm;
+using Test.NewSolution.Contracts.Clients;
+using Test.NewSolution.Data.Clients;
+using Test.NewSolution.FormsApp.Themes;
 
 namespace Test.NewSolution.FormsApp
 {
     /// <summary>
     /// App.
     /// </summary>
-	public class App : Application
+	public class App : MvvmApp
 	{                
         /// <summary>
         /// Initializes a new instance of the <see cref="Test.NewSolution.App"/> class.
         /// </summary>
         /// <param name="typeResolveProvider">Type resolve provider.</param>
-        public App ()
-		{
-            // The root page of your application
-            MainPage = new NavigationPage(Container.Resolve<MainView>());
-		}
+        public App (IMvvmPlatform platform):base(platform){}
+
+        /// <summary>
+        /// Registers the views.
+        /// </summary>
+        protected override void RegisterViews()
+        {
+            ViewContainer.RegisterView<MainViewModel, MainView>();
+        }
+        /// <summary>
+        /// Registers the services.
+        /// </summary>
+        protected override void RegisterServices()
+        {
+            base.RegisterServices();
+
+            // Services
+            Container.RegisterSingleton<IPreferenceService, PreferenceService>();
+            Container.RegisterSingleton<ILoggingService, LoggingService>();
+
+            // Clients
+            Container.Register<IApiClientProvider, HttpApiClientProvider>();
+
+            // Repositories
+            Container.RegisterSingleton<IRepository<PreferenceModel>, Repository<PreferenceModel>>();
+        }
+
+        /// <summary>
+        /// Gets the main page.
+        /// </summary>
+        /// <returns>The main page.</returns>
+        protected override Page GetMainPage()
+        {
+            return new AppNavigationPage(Container.Resolve<MainView>());
+        }
 
         #region App Lifecycle Callbacks
 
