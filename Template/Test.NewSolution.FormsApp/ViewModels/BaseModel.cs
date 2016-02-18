@@ -77,12 +77,8 @@ namespace Test.NewSolution.FormsApp.ViewModels
         private void AddPropertyDependency(Expression<Func<object>> property, 
             Expression<Func<object>> dependantProperty)
         {
-            var propertyName = PropertyNameHelper.GetPropertyName <BaseViewModel>(property);
-            if (!_propertyDependencies.ContainsKey (propertyName))
-                _propertyDependencies.Add (propertyName, new List<string> ());
-
-            var list = _propertyDependencies [propertyName];
-            list.Add (PropertyNameHelper.GetPropertyName<BaseViewModel>(dependantProperty));
+            AddPropertyDependency(PropertyNameHelper.GetPropertyName <BaseModel>(property), 
+                PropertyNameHelper.GetPropertyName<BaseModel>(dependantProperty));
         }
 
         /// <summary>
@@ -97,7 +93,8 @@ namespace Test.NewSolution.FormsApp.ViewModels
                 _propertyDependencies.Add (sourceProperty, new List<string> ());
 
             var list = _propertyDependencies [sourceProperty];
-            list.Add (dependantProperty);
+            if (!list.Contains(dependantProperty))                
+                list.Add (dependantProperty);
         }
 
         /// <summary>

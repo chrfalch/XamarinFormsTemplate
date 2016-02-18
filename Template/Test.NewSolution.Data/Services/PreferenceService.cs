@@ -7,6 +7,7 @@ using Test.NewSolution.Helpers;
 using System.Linq.Expressions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Test.NewSolution.Data.Services
 {
@@ -112,9 +113,9 @@ namespace Test.NewSolution.Data.Services
         /// <param name="key">Key.</param>
         /// <param name="value">Value.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        private void SetObjectForKey<T>(Expression<Func<object>> property, T value)
+        private void SetObjectForKey<T>(T value, [CallerMemberName] string propertyName = null)
         {
-            var key = PropertyNameHelper.GetPropertyName<PreferenceService>(property);
+            var key = propertyName;
 
             var json = JsonConvert.SerializeObject(value);
 
@@ -157,20 +158,32 @@ namespace Test.NewSolution.Data.Services
         /// <returns>The object for key.</returns>
         /// <param name="key">Key.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        private T GetObjectForKey<T>(Expression<Func<object>> property, T defaultValue)
+        private TValueType GetObjectForKey<TValueType>([CallerMemberName] string propertyName = null)
         {
-            var key = PropertyNameHelper.GetPropertyName<PreferenceService>(property);
+            return GetObjectForKey<TValueType>(() => default(TValueType));
+        }
+
+        /// <summary>
+        /// Gets the object for key.
+        /// </summary>
+        /// <returns>The object for key.</returns>
+        /// <param name="key">Key.</param>
+        /// <typeparam name="T">The 1st type parameter.</typeparam>
+        private TValueType GetObjectForKey<TValueType>(Func<TValueType> defaultValueFunc, [CallerMemberName] string propertyName = null)
+        {
+            var key = propertyName;
 
             // DO NOT LOG HERE!! Logging will cause the log system to never stop since each log causes
             // a call to a preference method which in turn will log..
             //Logger.Log(LogLevel.Verbose, this, "GetObject(key={0})", key);
             if(!_cache.ContainsKey(key))
             {                    
-                SetObjectForKey<T>(property, defaultValue);
+                var defaultValue = defaultValueFunc();
+                SetObjectForKey<TValueType>(defaultValue);
                 return defaultValue;
             }
 
-            return JsonConvert.DeserializeObject<T>(_cache[key].ValueAsJSON);
+            return JsonConvert.DeserializeObject<TValueType>(_cache[key].ValueAsJSON);
 
         }
         #endregion
