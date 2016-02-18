@@ -16,7 +16,6 @@ namespace Test.NewSolution.FormsApp.Views
         public MainView()
         {
             DefaultBackButtonBehaviour = true;
-            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         /// <summary>
@@ -25,10 +24,8 @@ namespace Test.NewSolution.FormsApp.Views
         /// <returns>The layout.</returns>
         protected override View CreateContents()
         {
-            return new Button{
-                Text = Strings.ButtonMenu,
-                BackgroundColor = Color.Transparent,
-                Command = ViewModel.ShowMenuCommand
+            return new Label{
+                Text = "Hello World!",
             };            
         }
     }

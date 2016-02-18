@@ -15,15 +15,23 @@ using Test.NewSolution.Droid.Platform.Mvvm;
 using Test.NewSolution.FormsApp.Mvvm;
 using Test.NewSolution.FormsApp.IoC;
 using Acr.UserDialogs;
+using Xamarin.Forms.Platform.Android;
 
 namespace Test.NewSolution.Droid
 {
-	[Activity (Label = "Test.NewSolution", Icon = "@drawable/icon", 
-    ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
+    [Activity (Label = "Test.NewSolution", Icon = "@drawable/icon", 
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
 	{
+        /// <summary>
+        /// Raises the create event.
+        /// </summary>
+        /// <param name="bundle">Bundle.</param>
 		protected override void OnCreate (Bundle bundle)
 		{
+            FormsAppCompatActivity.ToolbarResource = Resource.Layout.toolbar;
+            FormsAppCompatActivity.TabLayoutResource = Resource.Layout.tabs;
+
 			base.OnCreate (bundle);
 
 			global::Xamarin.Forms.Forms.Init (this, bundle);
